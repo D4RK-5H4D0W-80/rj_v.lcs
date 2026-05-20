@@ -39,7 +39,7 @@
     }
 
     .hero-img {
-      max-width: 550px;
+      max-width: 490px;
       border-radius: 0;
       box-shadow: none;
     }
@@ -100,12 +100,14 @@
       justify-content: center;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.3s ease;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
     }
 
     .modal-overlay.active {
       opacity: 1;
       pointer-events: auto;
+      visibility: visible;
     }
 
     .modal-card {
@@ -234,13 +236,6 @@
         <li><a href="index.html" class="active">Home</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="skills.html">Skills</a></li>
-        <!-- <li class="dropdown">
-          <a href="skills.html">Skills ▾</a>
-          <ul class="dropdown-menu">
-            <li><a href="skills.html#technical">Technical Skills</a></li>
-            <li><a href="skills.html#personal">Personal Skills</a></li>
-          </ul>
-        </li> -->
         <li><a href="projects.html">Projects</a></li>
         <li><a href="apps.html">Applications</a></li>
         <li><a href="contact.html">Contact</a></li>
@@ -269,10 +264,11 @@
       <h2>CAREER OBJECTIVE</h2>
       
       <div id="objectiveDisplayView">
-        </div>
+       
+        <p>Seeking a challenging role in an IT organization where I can leverage my technical skills and contribute to company growth. wennnn</p>
+      </div>
 
       <div class="admin-link-box">
-        <!-- <a href="login.html" class="admin-edit-link">⚙️ Login to Edit Objective Journey Text</a> -->
       </div>
     </div>
   </div>
@@ -281,10 +277,6 @@
     const heroSection = document.getElementById('hero-section');
     const infoModal = document.getElementById('infoModal');
     const objectiveDisplayView = document.getElementById('objectiveDisplayView');
-
-    const defaultObjective = 
-      "<p>Welcome! I specialize in bridging structural user interfaces with high-converting promotional aesthetics. My primary goal is to turn innovative designs into cleanly organized, production-ready code blocks.</p>" +
-      "<p>With an active focus on responsive framework development and layout architectures, I work to establish workflows where code meets creativity efficiently.</p>";
 
     function updateBackground(theme) {
       if (theme === 'light') {
@@ -306,8 +298,6 @@
       const storedObjective = localStorage.getItem('profile_objective');
       if (storedObjective) {
         objectiveDisplayView.innerHTML = storedObjective;
-      } else {
-        objectiveDisplayView.innerHTML = defaultObjective;
       }
     }
 
