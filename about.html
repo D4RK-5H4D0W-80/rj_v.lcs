@@ -11,7 +11,7 @@
        MAIN APP FRAMEWORK & PERSISTENT LAYOUTS
        ========================================== */
     main {
-      padding: 100px 10% 60px 10%;
+      padding: 95px 10% 60px 10%;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -56,11 +56,8 @@
     }
 
     .profile-image-frame img {
-      /* width: 100%; */
       height: auto;
       border-radius: 16px;
-      /* box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-      border: 2px solid rgba(255, 255, 255, 0.05); */
       display: block;
     }
 
@@ -84,7 +81,6 @@
     .profile-text-content p {
       font-size: 1.1rem;
       line-height: 1.8;
-      /* color: var(--text-muted, #94a3b8); */
       margin-bottom: 1.5rem;
       text-align: justify;
       text-indent: 50px;
@@ -180,7 +176,6 @@
     .timeline-company {
       font-size: 1.05rem;
       font-weight: 500;
-      /* color: rgba(255, 255, 255, 0.7); */
       margin-bottom: 0.2rem;
     }
 
@@ -190,7 +185,6 @@
     .timeline-location {
       font-size: 0.9rem;
       font-weight: 400;
-      /* color: var(--text-muted, #94a3b8); */
       margin-bottom: 0.8rem;
       font-style: italic;
     }
@@ -201,9 +195,7 @@
     .timeline-description {
       font-size: 1rem;
       line-height: 1.6;
-      /* color: var(--text-muted, #94a3b8); */
       text-align: justify;
-    
     }
 
     /* ==========================================
@@ -301,17 +293,17 @@
   </nav>
 
   <main>
-      <section>
+    <section>
       <h1 class="section-title">About Me</h1>
       <div class="profile-container">
         <div class="profile-image-frame">
           <img src="images/rjvlcs_about_img.svg" alt="rj_v.lcs Professional Portrait Visual representation">
         </div>
         <div class="profile-text-content">
+          <!-- 📝 EDIT YOUR TEXT DIRECTLY IN THESE TAGS BELOW -->
           <h2 id="bioSubtitle">Who I Am ?</h2>
           <div id="bioBodyParagraphs">
             <p>My name is Ricky Jay V. Licos, a cum laude graduate with a Bachelor’s degree in Information Technology from the University of Northern Philippines (Class of 2024). During my studies, I gained proficiency in front-end technologies such as HTML, CSS, and JavaScript, while also developing back-end skills in PHP and database management using MySQL. My capstone project involved developing the "Library Management System for Ilocos Sur National High School." Additionally, I completed an internship at CSA: Business Consultancy, where I demonstrated my web development skills by creating static websites for three different companies: "Gio’s Ilocano Blend," "Sanvaste Hydroponics Farm," and "D’Outbase Lodging House & Resort." After graduating, I discovered a passion for graphic design, specifically focusing on creating posters for food, cosmetics, shoes, and other products. I continue to practice daily to further refine my design skills.</p>
-            
           </div>
           <div class="admin-link-row">
           </div>
@@ -319,7 +311,7 @@
       </div>
     </section>
 
-    <section>
+   <section>
       <h1 class="section-title">Work Experience</h1>
       <div class="timeline-container" id="timelineHook">
         <div class="timeline-node">
@@ -370,7 +362,6 @@
       const storedBio = JSON.parse(localStorage.getItem('about_bio'));
       const storedExperience = JSON.parse(localStorage.getItem('about_experience'));
 
-      // If manager updates exist in localStorage, allow them to overwrite the HTML layout dynamically
       if (storedBio) {
         document.getElementById('bioSubtitle').innerText = storedBio.subtitle;
         const bioParagraphsContainer = document.getElementById('bioBodyParagraphs');
@@ -412,8 +403,12 @@
       }
     }
 
-    // Check for panel overrides on run
-    loadObjectiveContent();
+    /* 
+      ⚠️ INTERNET CHROME CACHE OVERRIDE SAFETY SWITCH:
+      I have added '//' below to stop JavaScript from overwriting your HTML edits.
+      Uncomment it when you want your admin dashboard updates to work again.
+    */
+    // loadObjectiveContent();
   </script>
 </body>
 </html>
