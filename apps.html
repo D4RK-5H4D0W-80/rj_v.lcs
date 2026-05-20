@@ -25,7 +25,7 @@
 
     /* Set main layout to precisely fill remaining screen height without scrolling */
     main {
-       padding: 20px 0 40px 0;
+      padding: 20px 0 40px 0;
       height: 100vh;
       display: flex;
       flex-direction: column;
@@ -76,8 +76,8 @@
     /* Clickable Link Document Showcase Engine - Fixed Size 300x400px */
     .clickable-document-link {
       display: block;
-      width: 400px;
-      height: 500px;
+      width: 300px;
+      height: 400px;
       border-radius: 8px;
       overflow: hidden;
       border: 2px solid rgba(255, 165, 0, 0.2);
@@ -243,9 +243,9 @@
     <div class="brand-container">
       <h3>rj_v.lcs</h3>
       <a href="login.html" class="brand-user-icon" title="Admin Access Panel">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           <path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-        </svg>
+        </svg> -->
       </a>
     </div>
 
@@ -270,8 +270,18 @@
 
   <main>
     <div class="skills-select-wrapper">
+      <!-- TO ADD NEW DOCUMENTS AND LINKS, ADD THEM DIRECTLY AS OPTION TAGS BELOW 👇 -->
       <select id="skills-route-select" class="skills-dropdown-selector" onchange="handleDropdownChange(this.value)">
-        <!-- Dynamically managed option layout spaces structural block inside runtime initializers below -->
+        <option value="pds" data-image="images/pds.png" data-link="applications/PDS_LICOS_RICKY JAY.pdf">Personal Data Sheet</option>
+        <option value="wes" data-image="images/wes.png" data-link="applications/WES_LICOS_RICKY JAY.pdf">Work Experience Sheet</option>
+        <option value="letter" data-image="images/al.png" data-link="applications/application letter_LICOS_RICKY JAY.pdf">Application Letter</option>
+        <option value="resume" data-image="images/rsm.png" data-link="applications/resume_LICOS_RICKY JAY.pdf">Resume</option>
+        <option value="eligibility" data-image="images/csc.png" data-link="applications/eligibility_LICOS_RICKY JAY.pdf">Certification of Eligibility</option>
+        <option value="tor" data-image="images/otr.png" data-link="applications/tor_LICOS_RICKY JAY.pdf">Official Transcript of Record</option>
+        <option value="awards" data-image="images/ca.png" data-link="applications/c&a_LICOS_RICKY JAY.pdf">Certificates and Achievements</option>
+         <option value="passport" data-image="images/psprt.png" data-link="applications/passport_LICOS_RICKY JAY.pdf">Passport Size Picture</option>
+          <option value="coe" data-image="images/coe.png" data-link="applications/coe_LICOS_RICKY JAY.pdf">Certificates of Employment</option>
+           <option value="ipcr" data-image="images/ipcr.png" data-link="applications/ipcr_LICOS_RICKY JAY.pdf">Individual Performance Commitment and Review</option>
       </select>
     </div>
 
@@ -312,69 +322,24 @@
     });
 
     /* =============================================================
-       DOCUMENT CORE SYSTEM METADATA DATA SOURCE CONFIGURATION
+       ROUTING SYSTEM (Reads targets directly from HTML data parameters)
        ============================================================= */
-    const defaultRegistryDataset = {
-      pds: { image: "images/IPCR.png", link: "#" },
-      wes: { image: "images/IPCR.png", link: "#" },
-      letter: { image: "images/IPCR.png", link: "#" },
-      resume: { image: "images/IPCR.png", link: "#" },
-      eligibility: { image: "images/IPCR.png", link: "#" },
-      tor: { image: "images/IPCR.png", link: "#" },
-      awards: { image: "images/IPCR.png", link: "#" }
-    };
-
-    const defaultOptionsMetadata = [
-      { value: "pds", text: "Personal Data Sheet" },
-      { value: "wes", text: "Work Experience Sheet" },
-      { value: "letter", text: "Application Letter" },
-      { value: "resume", text: "Resume" },
-      { value: "eligibility", text: "Certification of Eligibility" },
-      { value: "tor", text: "Official Transcript of Record" },
-      { value: "awards", text: "Certificates and Achievements" }
-    ];
-
-    // Populates the dropdown structure dynamically from the manager data tracks
-    function generateDynamicDropdownMenu() {
-      if (!localStorage.getItem('document_options_metadata')) {
-        localStorage.setItem('document_options_metadata', JSON.stringify(defaultOptionsMetadata));
-      }
-      
-      const selectElement = document.getElementById('skills-route-select');
-      const metadataList = JSON.parse(localStorage.getItem('document_options_metadata'));
-      
-      selectElement.innerHTML = ""; // Clear baseline template content
-      
-      metadataList.forEach(optionData => {
-        const opt = document.createElement('option');
-        opt.value = optionData.value;
-        opt.textContent = optionData.text;
-        selectElement.appendChild(opt);
-      });
-    }
-
-    function fetchAndVerifyRegistryData() {
-      if (!localStorage.getItem('document_registry_dataset')) {
-        localStorage.setItem('document_registry_dataset', JSON.stringify(defaultRegistryDataset));
-      }
-      generateDynamicDropdownMenu();
-      renderActiveRouteView();
-    }
-
     function renderActiveRouteView() {
-      const dataset = JSON.parse(localStorage.getItem('document_registry_dataset')) || defaultRegistryDataset;
       const selector = document.getElementById('skills-route-select');
-      const activeKey = selector.value;
+      const selectedOption = selector.options[selector.selectedIndex];
       
-      // Safety anchor fall back onto baseline pds key space if empty configuration detected
-      const docData = dataset[activeKey] || dataset['pds'] || { image: "images/IPCR.png", link: "#" };
+      if (!selectedOption) return;
+
+      // Extract target source files straight from the HTML option tags
+      const previewImage = selectedOption.getAttribute('data-image') || "images/IPCR.png";
+      const targetLink = selectedOption.getAttribute('data-link') || "#";
       
       // Setup preview images and target reference navigation triggers
       const imgNode = document.getElementById('doc-display-img');
-      imgNode.src = docData.image;
+      imgNode.src = previewImage;
       imgNode.onerror = function() { this.src = 'images/IPCR.png'; };
       
-      document.getElementById('doc-clickable-link').href = docData.link;
+      document.getElementById('doc-clickable-link').href = targetLink;
 
       // Retain flash fading element trigger
       const container = document.getElementById('document-view-container');
@@ -389,12 +354,9 @@
     }
 
     function checkHashRoute() {
-      generateDynamicDropdownMenu(); // Synchronize listing matrix states cleanly
-      
       const hash = window.location.hash.replace('#', '');
       const selectElement = document.getElementById('skills-route-select');
       
-      // Check if current URL hash matches valid drop down options parameters
       let foundOption = false;
       for (let i = 0; i < selectElement.options.length; i++) {
         if (selectElement.options[i].value === hash) {
@@ -413,7 +375,6 @@
 
     // Lifecycle Boots Initializers
     window.addEventListener('DOMContentLoaded', () => {
-      fetchAndVerifyRegistryData();
       checkHashRoute();
     });
     window.addEventListener('hashchange', checkHashRoute);
