@@ -9,13 +9,14 @@
   <style>
     /* Set main layout to allow natural vertical content flow across sections */
     main {
-      padding: 90px 10% 40px 10%;
+      padding: 85px 10% 40px 10%;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       gap: 4rem;
       overflow-x: hidden;
     }
+
 
     /* ==========================================
        SECTION 1: HERO DISPLAY (Text & Carousel)
@@ -87,7 +88,7 @@
       aspect-ratio: 6 / 7; /* Forces a standard uniform sizing container */
       border-radius: 12px;
       overflow: hidden; 
-      background-color: #0b0f19; /* Sleek dark canvas background */
+      /* background-color: #0b0f19; Sleek dark canvas background */
       box-shadow: 0 20px 40px rgba(0,0,0,0.15);
     }
 
@@ -103,17 +104,14 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: 100%;
+      /* height: 100%; */
       display: flex;
       align-items: center;
       justify-content: center;
       opacity: 0;
       visibility: hidden;
       transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s ease;
-      /* background-color: #ffffff; */
     }
-
-    /* [data-theme="light"] .carousel-slide { background-color: #1e293b !important; } */
 
     /* Active slide overlays dynamically with a beautiful blend fade */
     .carousel-slide.active-slide {
@@ -123,9 +121,8 @@
     }
 
     .carousel-slide img {
-      width: 100%;
-      height: 100%;
-      /* object-fit: contain; Guarantees the full image is seen without any cuts */
+      width: 80%;
+      height:80%;
       display: block;
       border: #ffa500 solid 5px;
       border-radius: 20px;
@@ -165,7 +162,7 @@
     /* Indicator Bullets Container with overflow protection */
     .carousel-indicators-container {
       position: absolute;
-      bottom: 20px;
+      bottom: 0px;
       left: 50%;
       transform: translateX(-50%);
       width: 85%;
@@ -215,7 +212,7 @@
     .showcase-section {
       width: 100%;
       padding-top: 2rem;
-      border-top: 1px solid rgba(100, 116, 139, 0.2);
+      border-top: 1px solid #ffa500;
     }
 
     .showcase-section h2 {
@@ -239,7 +236,7 @@
       background: var(--card-bg, rgba(255,255,255,0.05));
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 12px;
-      padding: 0; /* Cleared internal padding to let image rest perfectly on header tracks */
+      padding: 0;
       box-shadow: 0 4px 15px rgba(0,0,0,0.1);
       overflow: hidden;
       display: flex;
@@ -285,7 +282,7 @@
     }
 
     .project-card h3 {
-      font-size: 1.3rem;
+      font-size: 1rem;
       color: #ffa500;
       margin: 0 0 0.75rem 0;
     }
@@ -295,7 +292,7 @@
       line-height: 1.5;
       color: #cbd5e1;
       margin: 0 0 1.5rem 0;
-      flex-grow: 1; /* Pushes button to align symmetrically across cards */
+      flex-grow: 1;
     }
 
     [data-theme="light"] .project-card p {
@@ -409,9 +406,9 @@
     <div class="brand-container">
       <h3>rj_v.lcs</h3>
       <a href="login.html" class="brand-user-icon" title="Admin Access Panel">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           <path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-        </svg>
+        </svg> -->
       </a>
     </div>
 
@@ -442,7 +439,6 @@
         <p>If you are interested in the sample design I made, just contact me:</p>
         <a href="contact.html" class="action-btn">Click Here!</a>
         <br>
-        <!-- <a href="admin.html" class="admin-entry-btn">⚙️ Open Content Manager</a> -->
       </div>
 
       <div class="hero-carousel-side">
@@ -450,19 +446,116 @@
           <button class="carousel-btn prev" onclick="moveSlide(-1)">❮</button>
           <button class="carousel-btn next" onclick="moveSlide(1)">❯</button>
           
-          <div class="carousel-track" id="carouselTrack"></div>
+          <!-- CAROUSEL TRACK: Add or remove slides directly in the HTML below -->
+          <div class="carousel-track" id="carouselTrack">
+            
+            <div class="carousel-slide active-slide">
+              <img src="images/a.png" alt="First Graphic Design Project">
+            </div>
+            
+            <div class="carousel-slide">
+              <img src="images/b.png" alt="Second Graphic Design Project" >
+            </div>
 
-          <div class="carousel-indicators-container">
-            <div class="carousel-indicators" id="carouselIndicators"></div>
+            <div class="carousel-slide">
+              <img src="images/c.png" alt="Third Graphic Design Project">
+            </div>
+
+            <div class="carousel-slide active-slide">
+              <img src="images/d.png" alt="First Graphic Design Project">
+            </div>
+            
+            <div class="carousel-slide">
+              <img src="images/e.png" alt="Second Graphic Design Project" >
+            </div>
+
+            <div class="carousel-slide">
+              <img src="images/f.png" alt="Third Graphic Design Project">
+            </div>
+
+
+            <div class="carousel-slide active-slide">
+              <img src="images/g.png" alt="First Graphic Design Project">
+            </div>
+            
+            <div class="carousel-slide">
+              <img src="images/h.png" alt="Second Graphic Design Project" >
+            </div>
+
+            <div class="carousel-slide">
+              <img src="images/i.png" alt="Third Graphic Design Project">
+            </div>
+
+            <div class="carousel-slide active-slide">
+              <img src="images/j.png" alt="First Graphic Design Project">
+            </div>
+            
+            <div class="carousel-slide">
+              <img src="images/k.png" alt="Second Graphic Design Project" >
+            </div>
+
+         
+
           </div>
+
+          <!-- CAROUSEL INDICATORS: Ensure you have one indicator dot for every slide above
+          <div class="carousel-indicators-container">
+            <div class="carousel-indicators" id="carouselIndicators">
+              <div class="indicator-dot active" onclick="jumpToSlide(0)"></div>
+              <div class="indicator-dot" onclick="jumpToSlide(1)"></div>
+              <div class="indicator-dot" onclick="jumpToSlide(2)"></div>
+            </div>
+          </div> -->
         </div>
       </div>
 
     </section>
 
+    <!-- WEBSITE PROJECTS GRID: Add or remove cards directly in the HTML below -->
     <section class="showcase-section" id="more-projects">
       <h2 style="color: #ffa500;">Website Projects</h2>
-      <div class="projects-grid" id="highlightsGridTarget"></div>
+      <div class="projects-grid" id="highlightsGridTarget">
+
+        <!-- Project Card 1 -->
+        <div class="project-card">
+          <div class="project-card-image-wrapper">
+            <img src="images/1.png" alt="Application Engine" onerror="this.src='images/web design.png'">
+          </div>
+          <div class="project-card-content">
+            <h3 class="web-title">GIO'S ILOCANO BLEND</h3>
+            <p>Created author: Ricky Jay V. Licos <br><br> Created date: 04-16-2024</p>
+            <a href="https://d4rk-5h4d0w-80.github.io/Gios-Ilocano-Blend/" target="_blank" class="card-view-btn">View Project</a>
+          </div>
+        </div>
+
+        <!-- Project Card 2 -->
+        <div class="project-card">
+          <div class="project-card-image-wrapper">
+            <img src="images/2.png" alt="E-Commerce Platform" onerror="this.src='images/web design.png'">
+          </div>
+          <div class="project-card-content">
+            <h3 class="web-title">Sanvaste Hydroponics Farm</h3>
+            <p>Created author: Ricky Jay V. Licos <br><br> Created date: 05-23-2024</p>
+            <a href="https://d4rk-5h4d0w-80.github.io/Sanvaste-Hydroponics-Farm/" target="_blank" class="card-view-btn">View Project</a>
+          </div>
+        </div>
+
+        <!-- Project Card 3 -->
+        <div class="project-card">
+          <div class="project-card-image-wrapper">
+            <img src="images/3.png" alt="System Dashboard" onerror="this.src='images/web design.png'">
+          </div>
+          <div class="project-card-content">
+            <h3 class="web-title">D'outbase Lodging House & Resort</h3>
+            <p>Created author: Ricky Jay V. Licos <br><br> Created date: 06-10-2024</p>
+            <a href="https://d4rk-5h4d0w-80.github.io/D-Outbase-Lodging-House-and-Resort/" target="_blank" class="card-view-btn">View Project</a>
+          </div>
+        </div>
+
+
+  
+
+      </div>
     </section>
   </main>
 
@@ -476,80 +569,11 @@
     }
     document.body.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');
 
-    /* Baseline Initial Fallback Carousel Data */
-    const defaultSlides = [
-      { id: "slide_1", src: "images/a.png", alt: "Delicious Burger Advertisement Poster" },
-      { id: "slide_2", src: "images/b.png", alt: "Delicious Hotdog with Fries Promo Poster" },
-      { id: "slide_3", src: "images/c.png", alt: "Magic Bean Café Poster Concept" },
-      { id: "slide_4", src: "images/d.png", alt: "Spaghetti Pasta Promotion Art" },
-      { id: "slide_5", src: "images/e.png", alt: "Chips, Beer and Beverages Ad Poster" },
-      { id: "slide_6", src: "images/f.png", alt: "Skincare Gold Beautiful Skin Cosmetics Banner" },
-      { id: "slide_7", src: "images/g.png", alt: "Under Armour SC30 Sneakers New Collection Poster" },
-      { id: "slide_8", src: "images/h.png", alt: "Strawberry Matcha Latte and Cake Poster" },
-      { id: "slide_9", src: "images/i.png", alt: "Fresh Strawberry Juice Bottle Creative Showcase" },
-      { id: "slide_10", src: "images/j.png", alt: "Sweet and Sour Chicken Food Advertising Layout" },
-      { id: "slide_11", src: "images/k.png", alt: "Sweet and Sour Chicken Food Advertising Layout" }
-    ];
-
-    /* Baseline Initial Fallback Highlight Card Data */
-    const defaultCards = [
-      { id: "card_1", title: "Application Engine", desc: "Interactive software application platform built with core UI scalability standards.", image: "images/app-engine.jpg", link: "apps.html" },
-      { id: "card_2", title: "E-Commerce Platform", desc: "Responsive online interface complete with dynamic transaction components.", image: "images/ecommerce.jpg", link: "apps.html" },
-      { id: "card_3", title: "System Dashboard", desc: "Complex visual workspace analytics console optimizing high-volume logical flows.", image: "images/dashboard.jpg", link: "apps.html" }
-    ];
-
-    // Read stored databases or set structural baselines
-    let portfolioItems = JSON.parse(localStorage.getItem('portfolio_slides')) || [];
-    if (portfolioItems.length === 0) {
-      portfolioItems = defaultSlides;
-      localStorage.setItem('portfolio_slides', JSON.stringify(defaultSlides));
-    }
-
-    let highlightItems = JSON.parse(localStorage.getItem('development_highlights')) || [];
-    if (highlightItems.length === 0) {
-      highlightItems = defaultCards;
-      localStorage.setItem('development_highlights', JSON.stringify(defaultCards));
-    }
-
-    /* Build Carousel DOM Nodes */
-    const track = document.getElementById('carouselTrack');
-    const indicatorsContainer = document.getElementById('carouselIndicators');
-
-    track.innerHTML = '';
-    indicatorsContainer.innerHTML = '';
-
-    portfolioItems.forEach((item, index) => {
-      const slide = document.createElement('div');
-      slide.className = `carousel-slide ${index === 0 ? 'active-slide' : ''}`;
-      slide.innerHTML = `<img src="${item.src}" alt="${item.alt || 'Portfolio Art'}" onerror="this.src='images/web design.png'">`;
-      track.appendChild(slide);
-
-      const dot = document.createElement('div');
-      dot.className = `indicator-dot ${index === 0 ? 'active' : ''}`;
-      dot.addEventListener('click', () => jumpToSlide(index));
-      indicatorsContainer.appendChild(dot);
-    });
-
-    /* Build Highlights Grid Nodes Dynamically - target="_blank" added below */
-    const gridTarget = document.getElementById('highlightsGridTarget');
-    gridTarget.innerHTML = highlightItems.map(card => `
-      <div class="project-card">
-        <div class="project-card-image-wrapper">
-          <img src="${card.image}" alt="${card.title}" onerror="this.src='images/web design.png'">
-        </div>
-        <div class="project-card-content">
-          <h3>${card.title}</h3>
-          <p>${card.desc}</p>
-          <a href="${card.link || 'apps.html'}" target="_blank" class="card-view-btn">View Project</a>
-        </div>
-      </div>
-    `).join('');
-
-    /* Carousel Operations Engine */
+    /* Simplified Carousel Operations Engine (Handles existing HTML elements) */
     let activeIndex = 0;
     const slides = document.querySelectorAll('.carousel-slide');
     const dots = document.querySelectorAll('.indicator-dot');
-    const totalSlides = dots.length;
+    const totalSlides = slides.length;
 
     function updateCarouselDisplay() {
       if (totalSlides === 0) return;
