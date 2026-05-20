@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skills | rj_v.lcs</title>
+   <link rel="icon" href="images/logo.png" type="image/x-icon">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Content grouping states controls */
+    .skills-category-content {
+      display: none;
+      animation: fadeIn 0.4s ease-in-out forwards;
+      height: 100%;
+    }
+
+    .skills-category-content.active { 
+      display: block; 
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Set main layout to precisely fill remaining screen height without scrolling */
+    main {
+      /* padding: 90px 10% 0 10%; 90px top padding ensures space below the fixed navbar */
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden; /* Clips any unintended layout overflow tightly to the window */
+    }
+
+    /* Scrollable Container Wrapper for the Technical Grid Area */
+    .technical-scroll-container {
+      height: calc(100vh - 180px); /* Restricts container height to visible screen track */
+      overflow-y: auto; /* Generates a clean scrollbar automatically if items exceed height */
+      padding-right: 0.5rem; /* Prevents scrollbar track from overlapping card edges */
+    }
+
+    /* Custom elegant scrollbar rules for webkit browsers (Chrome, Safari, Edge) */
+    .technical-scroll-container::-webkit-scrollbar {
+      width: 6px;
+    }
+    .technical-scroll-container::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .technical-scroll-container::-webkit-scrollbar-thumb {
+      background: var(--muted, #64748b);
+      border-radius: 10px;
+    }
+    .technical-scroll-container::-webkit-scrollbar-thumb:hover {
+      background: var(--accent, #ffa500);
+    }
+
+    /* 4-Column Layout Engine for Technical Skills Grid */
+    .technical-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr); /* Generates exactly 4 equal columns on desktop */
+      gap: 1.5rem;
+      width: 100%;
+      padding-bottom: 2rem; /* Adds comfortable cushion room at the bottom of scroll boundary */
+    }
+
+    /* Technology Icon Styling inside Technical Cards */
+    .card-tech-icon {
+      height: 120px;         /* Increased from 80px to 120px to make tech images much bigger */
+      width: auto;           /* Maintains original aspect ratio */
+      max-width: 100%;       /* Prevents stretching past card borders */
+      display: block;
+      margin-left: auto;     /* Center icons horizontally */
+      margin-right: auto;
+      margin-bottom: 1.2rem; /* Creates spacing between the image logo and descriptive text */
+      object-fit: contain;
+    }
+
+    .technical-grid .card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      line-height: 1.4;
+      text-align: center; /* Center-align paragraph text */
+    }
+
+    /* Side-by-Side Flex Layout Engine for Personal Skills Section */
+    .personal-skills-layout {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end; /* Roots image and text to the absolute bottom edge */
+      justify-content: space-between;
+      gap: 3rem;
+      height: calc(100vh - 140px); /* Expanded workspace height since title is removed */
+      width: 100%;
+    }
+
+    /* Left Side: Container pulling graphic straight down to baseline window edge */
+    .skills-image-container {
+      flex: 1; /* Scaled down slightly from 1.3 to balance with medium image sizing */
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-end;
+      height: 100%;
+    }
+
+    .skills-portrait-img {
+      width: 100%; /* Scales horizontally to fill the layout segment completely */
+      max-width: 400px; /* Reduced from 550px to 400px to make it perfectly medium-sized */
+      height: auto;
+      max-height: 100%; /* Constrains graphic from growing taller than the container */
+      display: block;
+      object-fit: contain; /* Protects native aspect ratio across different screen sizes */
+    }
+
+    /* Right Side: Text card area vertically balanced alongside portrait graphic */
+    .skills-text-container {
+      flex: 1.4;
+      max-width: 650px;
+      align-self: center; /* Centers the skills metric blocks cleanly */
+      padding-bottom: 80px; /* Adjusts alignment now that the top title is gone */
+    }
+
+    /* Mobile Responsive Adaptation */
+    @media (max-width: 1200px) {
+      .technical-grid {
+        grid-template-columns: repeat(2, 1fr); /* Drops smoothly to 2 columns on small laptops/tablets */
+      }
+    }
+
+    @media (max-width: 768px) {
+      main {
+        /* height: auto; */
+        padding: 120px 6% 40px 6%;
+        overflow: visible;
+      }
+      .technical-scroll-container {
+        height: auto;
+        overflow-y: visible; /* Reverts scroll containment to natural viewport scroll flow on mobile */
+      }
+      .technical-grid {
+        grid-template-columns: 1fr; /* 1 card per row stack format on smartphone viewports */
+      }
+      .personal-skills-layout { 
+        flex-direction: column-reverse;
+        text-align: center; 
+        gap: 2rem; 
+        height: auto;
+      }
+      .skills-image-container { 
+        width: 100%; 
+        justify-content: center; 
+        height: auto;
+      }
+      .skills-portrait-img { 
+        width: 100%;
+        max-width: 300px; /* Adapts cleanly to mobile footprints */
+        height: auto;
+        max-height: none;
+      }
+      .skills-text-container { 
+        width: 100%; 
+        align-self: auto;
+        padding-bottom: 0;
+      }
+    }
+
+    /* ==========================================
+       BRAND LOGO & USER ICON LAYOUT BLOCK
+       ========================================== */
+    .brand-container {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-user-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-main, #ffffff);
+      transition: color 0.2s ease, transform 0.2s ease;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .brand-user-icon:hover {
+      color: #ffa500;
+      transform: scale(1.05);
+    }
+
+    .brand-user-icon svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+    }
+
+    /* ==========================================
+       BRAND DROPDOWN MENU STRATEGY STYLES
+       ========================================== */
+    .skills-select-wrapper {
+      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: center; /* Centers the select element container horizontally */
+      width: 100%;
+    }
+
+    .skills-dropdown-selector {
+      background: transparent;
+      border: 2px solid #ffa500;
+      color: #ffa500;
+      font-size: 1.75rem;
+      font-weight: bold;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      outline: none;
+      font-family: inherit;
+      transition: all 0.3s ease;
+      text-align: center; /* Aligns textual values inside selection parameters */
+    }
+
+    .skills-dropdown-selector:focus {
+      box-shadow: 0 0 8px rgba(255, 165, 0, 0.4);
+    }
+
+    .skills-dropdown-selector option {
+      background: #1e293b;
+      color: #ffffff;
+      font-size: 1.1rem;
+      font-weight: normal;
+    }
+
+    [data-theme="light"] .skills-dropdown-selector option {
+      background: #ffffff;
+      color: #64748b;
+    }
+
+    .admin-edit-badge-box {
+      text-align: center;
+      margin-top: -0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .admin-edit-badge-box a {
+      color: #ffa500;
+      font-size: 0.85rem;
+      text-decoration: underline;
+      opacity: 0.8;
+    }
+
+    .admin-edit-badge-box a:hover {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="brand-container">
+      <h3>rj_v.lcs</h3>
+      <a href="login.html" class="brand-user-icon" title="Admin Access Panel">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+        </svg>
+      </a>
+    </div>
+
+    <div class="nav-right">
+      <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
+      <label for="menu-toggle" class="burger-menu-btn">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+      <ul>
+        <li><a href="index.html" id="nav-home">Home</a></li>
+        <li><a href="about.html" id="nav-about">About</a></li>
+        <li><a href="skills.html" id="nav-skills" class="active">Skills</a></li>
+        <li><a href="projects.html" id="nav-projects">Projects</a></li>
+        <li><a href="apps.html" id="nav-apps">Applications</a></li>
+        <li><a href="contact.html" id="nav-contact">Contact</a></li>
+      </ul>
+      <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+    </div>
+  </nav>
+
+  <main>
+    <div class="skills-select-wrapper">
+      <select id="skills-route-select" class="skills-dropdown-selector" onchange="handleDropdownChange(this.value)">
+        <option value="technical">Technical Skills</option>
+        <option value="personal">Personal Skills</option>
+      </select>
+    </div>
+
+    <div class="admin-edit-badge-box">
+      <!-- <a href="skills-manager.html">⚙️ Open Skills Modification Panel</a> -->
+    </div>
+
+    <div id="technical-skills" class="skills-category-content active">
+      <div class="technical-scroll-container">
+        <div class="technical-grid" id="technical-grid-target">
+          </div>
+      </div>
+    </div>
+
+    <div id="personal-skills" class="skills-category-content">
+      <div class="personal-skills-layout">
+        <div class="skills-image-container">
+          <img src="images/rjvlcs_bg_personal_skills.svg" alt="Your Portrait" class="skills-portrait-img">
+        </div>
+        <div class="skills-text-container">
+          <div class="card">
+            <div style="margin-top: 1.5rem;" id="personal-list-target">
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function toggleTheme() {
+      const current = document.body.getAttribute('data-theme');
+      const targetTheme = current === 'light' ? 'dark' : 'light';
+      document.body.setAttribute('data-theme', targetTheme);
+      localStorage.setItem('theme', targetTheme);
+    }
+    document.body.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');
+
+    // Manage navigation link click toggle frames
+    document.querySelectorAll('.nav-right ul li a').forEach(link => {
+      link.addEventListener('click', function() {
+        document.querySelectorAll('.nav-right ul li a').forEach(el => el.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    /* =============================================================
+       DATA SEEDING ENGINE (DEFAULT VALUES USED ON FIRST RUN)
+       ============================================================= */
+    const initialTechnicalData = [
+      { id: "tech_1", title: "Graphic Design", image: "images/graphic design.png", metric: "90%" },
+      { id: "tech_2", title: "Web Design", image: "images/web design.png", metric: "85%" },
+      { id: "tech_3", title: "Microsoft Word", image: "images/word.png", metric: "95%" },
+      { id: "tech_4", title: "Microsoft Excel", image: "images/excel.png", metric: "90%" }
+    ];
+
+    const initialPersonalData = [
+      { id: "pers_1", statement: "Motivated and always willing to learn new things", metric: "100%" },
+      { id: "pers_2", statement: "Independent and self-sufficient in handling task", metric: "100%" },
+      { id: "pers_3", statement: "Collaborative and able to work in teams or group", metric: "100%" }
+    ];
+
+    function fetchStoredSkillsData() {
+      if (!localStorage.getItem('dataset_technical_skills')) {
+        localStorage.setItem('dataset_technical_skills', JSON.stringify(initialTechnicalData));
+      }
+      if (!localStorage.getItem('dataset_personal_skills')) {
+        localStorage.setItem('dataset_personal_skills', JSON.stringify(initialPersonalData));
+      }
+
+      renderSkillsDOM();
+    }
+
+    function renderSkillsDOM() {
+      const techList = JSON.parse(localStorage.getItem('dataset_technical_skills'));
+      const persList = JSON.parse(localStorage.getItem('dataset_personal_skills'));
+
+      // Render Technical Section
+      const techContainer = document.getElementById('technical-grid-target');
+      techContainer.innerHTML = techList.map(item => `
+        <div class="card" id="node-${item.id}">
+          <img src="${item.image}" alt="${item.title}" class="card-tech-icon" onerror="this.src='images/web design.png'">
+          <p>${item.title}</p>
+          <div class="skill-bar"><div class="skill-fill" data-width="${item.metric}"></div></div>
+        </div>
+      `).join('');
+
+      // Render Personal Section
+      const persContainer = document.getElementById('personal-list-target');
+      persContainer.innerHTML = persList.map(item => `
+        <div style="margin-bottom: 1.25rem;">
+          <p>📌 ${item.statement}</p>
+          <div class="skill-bar"><div class="skill-fill" data-width="${item.metric}"></div></div>
+        </div>
+      `).join('');
+
+      // Re-trigger bar filling animation workflow
+      const activeContentBlock = document.querySelector('.skills-category-content.active');
+      animateCategoryBars(activeContentBlock);
+    }
+
+    function handleDropdownChange(category) {
+      document.querySelectorAll('.skills-category-content').forEach(c => c.classList.remove('active'));
+      const targetedSection = document.getElementById(`${category}-skills`);
+      targetedSection.classList.add('active');
+      
+      document.getElementById('skills-route-select').value = category;
+      window.location.hash = category;
+
+      animateCategoryBars(targetedSection);
+    }
+
+    function animateCategoryBars(parentSection) {
+      if (!parentSection) return;
+      parentSection.querySelectorAll('.skill-fill').forEach(fill => {
+        fill.style.width = '0';
+        setTimeout(() => { fill.style.width = fill.dataset.width; }, 50);
+      });
+    }
+
+    function checkHashRoute() {
+      const hash = window.location.hash.replace('#', '');
+      if (hash === 'personal' || hash === 'technical') {
+        handleDropdownChange(hash);
+      } else {
+        animateCategoryBars(document.querySelector('.skills-category-content.active'));
+      }
+    }
+
+    // Lifecycle Boots
+    window.addEventListener('DOMContentLoaded', () => {
+      fetchStoredSkillsData();
+      checkHashRoute();
+    });
+    window.addEventListener('hashchange', checkHashRoute);
+  </script>
+</body>
+</html>

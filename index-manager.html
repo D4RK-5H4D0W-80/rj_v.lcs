@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Journey Manager | rj_v.lcs</title>
+   <link rel="icon" href="images/logo.png" type="image/x-icon">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    main {
+      padding: 120px 10% 40px 10%;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2.5rem;
+      border-bottom: 2px solid rgba(100, 116, 139, 0.2);
+      padding-bottom: 1rem;
+      gap: 1rem;
+    }
+
+    .panel-title h1 {
+      font-size: 2rem;
+      color: var(--accent, #ffa500);
+      margin: 0;
+    }
+
+    .panel-title p {
+      margin: 0.3rem 0 0 0;
+      color: var(--text-muted, #94a3b8);
+    }
+
+    .back-btn {
+      padding: 0.6rem 1.5rem;
+      background: #64748b;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .form-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 2.5rem;
+      border-radius: 12px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .form-card h2 {
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+      font-size: 1.35rem;
+      color: var(--accent, #ffa500);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: #ffffff;
+    }
+
+    .form-group textarea {
+      width: 100%;
+      padding: 1rem;
+      border-radius: 6px;
+      border: 1px solid rgba(100, 116, 139, 0.4);
+      background: rgba(0, 0, 0, 0.2);
+      color: #ffffff;
+      box-sizing: border-box;
+      font-family: inherit;
+      font-size: 1rem;
+      line-height: 1.6;
+      resize: vertical;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .submit-btn {
+      flex: 1;
+      padding: 0.8rem;
+      background: var(--accent, #ffa500);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.2s;
+    }
+
+    .submit-btn:hover {
+      background: #e09200;
+    }
+
+    .reset-btn {
+      background: transparent;
+      border: 1px solid #ef4444;
+      color: #ef4444;
+      padding: 0.8rem 1.2rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+
+    .reset-btn:hover {
+      background: rgba(239, 68, 68, 0.1);
+    }
+
+    /* ==========================================
+       RESPONSIVE DESIGN ADAPTATIONS
+       ========================================== */
+    @media (max-width: 768px) {
+      main {
+        padding: 100px 5% 40px 5%;
+      }
+
+      .panel-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .back-btn {
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+      }
+
+      .form-card {
+        padding: 1.5rem;
+      }
+
+      .btn-row {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <div class="panel-header">
+      <!-- <div class="panel-title">
+        <h1>Journey Objective Editor</h1>
+        <p>Manage the statement text block displayed in your Home Screen's Learn More popup.</p>
+      </div> -->
+        <a href="index-manager.html" class="admin-edit-link">⚙️ Edit Objective</a>
+        <a href="about-manager.html" class="admin-edit-link">⚙️ Edit About</a>
+        <a href="skills-manager.html">⚙️ Edit Skills</a>
+        <a href="admin.html" class="admin-entry-btn">⚙️ Edit Projects</a>
+        <a href="apps-manager.html" class="admin-entry-btn">⚙️ Edit Applications</a>
+        <a href="contact-manager.html" class="admin-entry-btn">⚙️ Edit Contacts</a>
+          <a href="upload.html" class="admin-entry-btn">⚙️ Upload Image</a>
+        <a href="index.html" class="back-btn">Logout</a>
+    </div>
+
+    <div class="form-card">
+      <h2>Edit Career Objective</h2>
+      <form id="journeyForm" onsubmit="handleFormSubmission(event)">
+        <div class="form-group">
+          <label for="journeyTextArea">Objective Paragraphs (Separate individual paragraphs with an empty blank line break)</label>
+          <textarea id="journeyTextArea" rows="12" placeholder="Write your professional statement updates here..." required></textarea>
+        </div>
+        
+        <div class="btn-row">
+          <button type="button" class="reset-btn" onclick="revertToSystemDefaults()">Restore Default</button>
+          <button type="submit" class="submit-btn">Save</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    // document.body.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');
+
+    const journeyTextArea = document.getElementById('journeyTextArea');
+
+    const defaultObjectiveText = 
+      "Welcome! I specialize in bridging structural user interfaces with high-converting promotional aesthetics. My primary goal is to turn innovative designs into cleanly organized, production-ready code blocks.\n\nWith an active focus on responsive framework development and layout architectures, I work to establish workflows where code meets creativity efficiently.";
+
+    // Pull current entry value or fall back to baseline mockup string
+    function initEditorFields() {
+      const storedObjective = localStorage.getItem('profile_objective');
+      if (storedObjective) {
+        // Formats markup tags clean before mapping them onto raw view area
+        journeyTextArea.value = storedObjective
+          .replace(/<p>/g, "")
+          .replace(/<\/p>/g, "\n\n")
+          .replace(/<br>/g, "\n")
+          .trim();
+      } else {
+        journeyTextArea.value = defaultObjectiveText;
+      }
+    }
+
+    function handleFormSubmission(e) {
+      e.preventDefault();
+      const rawText = journeyTextArea.value.trim();
+
+      if (!rawText) {
+        alert("The text block data cannot remain fully blank.");
+        return;
+      }
+
+      // Safe paragraph string compiler mapping
+      const formattedHtml = rawText
+        .split(/\n\s*\n/)
+        .map(para => `<p>${para.replace(/\n/g, "<br>")}</p>`)
+        .join("");
+
+      localStorage.setItem('profile_objective', formattedHtml);
+      alert("Changes recorded successfully! View them on your homepage layout.");
+    }
+
+    function revertToSystemDefaults() {
+      if (confirm("Revert your home screen narrative statement to baseline settings? User overrides will be wiped out.")) {
+        localStorage.removeItem('profile_objective');
+        journeyTextArea.value = defaultObjectiveText;
+        alert("Default data structures reapplied.");
+      }
+    }
+
+    // Launch Lifecycle Execution
+    initEditorFields();
+  </script>
+</body>
+</html>

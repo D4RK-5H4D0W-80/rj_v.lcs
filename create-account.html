@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account | rj_v.lcs</title>
+  <link rel="icon" href="images/logo.png" type="image/x-icon">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    main {
+      padding: 140px 10% 40px 10%;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    .login-container {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 2.5rem;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    [data-theme="light"] .login-container {
+      background: #ffffff;
+      border: 1px solid rgba(100, 116, 139, 0.2);
+      box-shadow: 0 20px 40px rgba(100, 116, 139, 0.1);
+    }
+
+    .login-container h1 {
+      margin-top: 0;
+      font-size: 1.75rem;
+      color: var(--accent, #ffa500);
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    .login-container p { color: #ffffff; text-align: center; font-size: 0.95rem; margin-bottom: 2rem; }
+    [data-theme="light"] .login-container p { color: #64748b !important; }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 6px;
+      border: 1px solid rgba(100, 116, 139, 0.4);
+      background: rgba(0, 0, 0, 0.2);
+      box-sizing: border-box;
+      font-size: 1rem;
+    }
+
+    [data-theme="light"] .form-group input {
+      background: rgba(0, 0, 0, 0.02);
+      color: #000000;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--accent, #ffa500);
+    }
+
+    .status-banner {
+      padding: 0.75rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      margin-bottom: 1.25rem;
+      font-weight: 500;
+      display: none;
+      text-align: center;
+    }
+
+    .status-banner.error {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid #ef4444;
+      color: #ef4444;
+    }
+
+    .status-banner.success {
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid #22c55e;
+      color: #22c55e;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 0.8rem;
+      background: var(--accent, #ffa500);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .login-btn:hover {
+      background: #e09200;
+    }
+
+    .action-links-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+      text-align: center;
+    }
+
+    .secondary-link {
+      display: inline-block;
+      font-size: 0.9rem;
+      color: var(--text-muted, #94a3b8);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .secondary-link:hover {
+      color: var(--accent, #ffa500);
+      text-decoration: underline;
+    }
+
+    .username_Field { color: #ffffff; }
+    [data-theme="light"] .username_Field { color: #64748b !important; }
+
+    .usernameField { color: #ffffff; }
+    [data-theme="light"] .usernameField { color: #64748b !important; }
+
+    .brand-container {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="brand-container">
+      <h3>rj_v.lcs</h3>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+    </div>
+  </nav>
+
+  <main>
+    <div class="login-container">
+      <h1>Create Admin Account</h1>
+      <p>Register new credentials to gain authorized management access.</p>
+      
+      <div class="status-banner" id="statusBanner"></div>
+
+      <form id="registerForm" onsubmit="event.preventDefault(); executeRegistration();">
+        <div class="form-group">
+          <label class="username_Field" for="usernameField">Username</label>
+          <input class="usernameField" type="text" id="usernameField" placeholder="Choose Username" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="username_Field" for="passwordField">Password</label>
+          <input class="usernameField" type="password" id="passwordField" placeholder="Create Password" required>
+        </div>
+
+        <div class="form-group">
+          <label class="username_Field" for="confirmPasswordField">Confirm Password</label>
+          <input class="usernameField" type="password" id="confirmPasswordField" placeholder="Repeat Password" required>
+        </div>
+
+        <button type="submit" class="login-btn">Register Account</button>
+        
+        <div class="action-links-container">
+          <a class="secondary-link" href="login.html">Already have an account? Log In</a>
+          <a class="secondary-link" href="index.html">Return to Public Homepage</a>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    document.body.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');
+
+    function toggleTheme() {
+      const current = document.body.getAttribute('data-theme');
+      const targetTheme = current === 'light' ? 'dark' : 'light';
+      document.body.setAttribute('data-theme', targetTheme);
+      localStorage.setItem('theme', targetTheme);
+    }
+
+    async function sha256(message) {
+      const msgBuffer = new TextEncoder().encode(message);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    async function executeRegistration() {
+      const usernameInput = document.getElementById('usernameField').value.trim();
+      const passwordInput = document.getElementById('passwordField').value;
+      const confirmPasswordInput = document.getElementById('confirmPasswordField').value;
+      const statusBanner = document.getElementById('statusBanner');
+
+      statusBanner.style.display = 'none';
+      statusBanner.className = 'status-banner';
+
+      if (passwordInput !== confirmPasswordInput) {
+        statusBanner.textContent = "Passwords do not match.";
+        statusBanner.classList.add('error');
+        statusBanner.style.display = 'block';
+        return;
+      }
+
+      // Convert plaintext immediately into a secure hash string
+      const securePasswordHash = await sha256(passwordInput);
+
+      const userAccount = {
+        username: usernameInput,
+        passwordHash: securePasswordHash
+      };
+
+      localStorage.setItem('customAdminAccount', JSON.stringify(userAccount));
+
+      statusBanner.textContent = "Account successfully registered!";
+      statusBanner.classList.add('success');
+      statusBanner.style.display = 'block';
+
+      setTimeout(() => {
+        window.location.href = 'login.html';
+      }, 1500);
+    }
+  </script>
+</body>
+</html>

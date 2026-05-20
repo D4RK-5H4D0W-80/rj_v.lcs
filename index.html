@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home | rj_v.lcs</title>
+  <link rel="icon" href="images/logo.png" type="image/x-icon">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .hero {
+      padding-bottom: 0px;
+      overflow: hidden;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      position: relative;
+      transition: background 0.3s ease;
+    }
+    
+    .hero-content {
+      padding-bottom: 60px;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .hero-content h1 { color: #ffffff; }
+    .hero-content p { color: #ffffff; }
+
+    [data-theme="light"] .hero-content h1 { color: #64748b !important; }
+    [data-theme="light"] .hero-content p { color: #64748b !important; }
+    
+    .hero-image-container {
+      justify-content: flex-end;
+      align-items: flex-end;
+      align-self: flex-end;
+      height: 100%;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-img {
+      max-width: 550px;
+      border-radius: 0;
+      box-shadow: none;
+    }
+    
+    @media (max-width: 768px) {
+      .hero { 
+        flex-direction: column;
+        padding-top: 140px;
+        justify-content: space-between;
+        text-align: center;
+      }
+      .hero-content { padding-bottom: 2rem; }
+      .hero-image-container { width: 100%; justify-content: center; }
+      .hero-img { max-width: 380px; }
+      .hero-buttons { justify-content: center; }
+    }
+
+    /* ==========================================
+       MODAL COMPONENT ENGINE UI RULES
+       ========================================== */
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: #ffa500;
+      border: 2px solid #ffa500;
+      padding: 0.8rem 1.8rem;
+      border-radius: 6px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      transition: all 0.2s ease;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 165, 0, 0.1);
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(11, 15, 25, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      background: #1e293b;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      width: 90%;
+      max-width: 550px;
+      border-radius: 12px;
+      padding: 2.5rem;
+      position: relative;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+      color: #ffffff;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+
+    .modal-overlay.active .modal-card {
+      transform: scale(1);
+    }
+
+    [data-theme="light"] .modal-card {
+      background: #ffffff;
+      border: 1px solid rgba(100, 116, 139, 0.2);
+      color: #1e293b;
+      box-shadow: 0 25px 50px -12px rgba(100, 116, 139, 0.15);
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      background: none;
+      border: none;
+      color: inherit;
+      font-size: 1.75rem;
+      cursor: pointer;
+      line-height: 1;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+
+    .modal-close-btn:hover {
+      opacity: 1;
+    }
+
+    .modal-card h2 {
+      margin-top: 0;
+      color: #ffa500;
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .modal-card p {
+      line-height: 1.6;
+      opacity: 0.9;
+      margin-bottom: 1.2rem;
+    }
+
+    .admin-link-box {
+      margin-top: 2rem;
+      padding-top: 1.2rem;
+      border-top: 1px dashed rgba(100, 116, 139, 0.3);
+      text-align: right;
+    }
+
+    .admin-edit-link {
+      color: #ffa500;
+      font-size: 0.9rem;
+      text-decoration: underline;
+      font-weight: 500;
+    }
+
+    /* ==========================================
+       BRAND LOGO & USER ICON LAYOUT BLOCK
+       ========================================== */
+    .brand-container {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-user-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-main, #ffffff);
+      transition: color 0.2s ease, transform 0.2s ease;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .brand-user-icon:hover {
+      color: #ffa500;
+      transform: scale(1.05);
+    }
+
+    .brand-user-icon svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="brand-container">
+      <h3>rj_v.lcs</h3>
+      <a href="login.html" class="brand-user-icon" title="Admin Access Panel">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+        </svg>
+      </a>
+    </div>
+    
+    <div class="nav-right">
+      <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
+      <label for="menu-toggle" class="burger-menu-btn">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+      <ul>
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <!-- <li class="dropdown">
+          <a href="skills.html">Skills ▾</a>
+          <ul class="dropdown-menu">
+            <li><a href="skills.html#technical">Technical Skills</a></li>
+            <li><a href="skills.html#personal">Personal Skills</a></li>
+          </ul>
+        </li> -->
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="apps.html">Applications</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+    </div>
+  </nav>
+
+  <main id="hero-section" class="hero">
+    <div class="hero-content">
+      <h1>Hi, I'm <span style="color: #ffa500;">Ricky Jay Vega Licos</span></h1>
+      <p>A future <span style="color: #ffa500; font-weight: bold;">Web Developer</span> & <span style="color: #ffa500; font-weight: bold;">Graphic Designer</span></p>
+      <div class="hero-buttons">
+        <a href="projects.html" class="btn">See Projects</a>
+        <button class="btn-secondary" onclick="openModal()">Learn More</button>
+      </div>
+    </div>
+    <div class="hero-image-container">
+      <img src="images/rjvlcs_bg_main.svg" alt="Your Name" class="hero-img">
+    </div>
+  </main>
+
+  <div class="modal-overlay" id="infoModal" onclick="closeModalViaOverlay(event)">
+    <div class="modal-card">
+      <button class="modal-close-btn" onclick="closeModal()">&times;</button>
+      <h2>CAREER OBJECTIVE</h2>
+      
+      <div id="objectiveDisplayView">
+        </div>
+
+      <div class="admin-link-box">
+        <!-- <a href="login.html" class="admin-edit-link">⚙️ Login to Edit Objective Journey Text</a> -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const heroSection = document.getElementById('hero-section');
+    const infoModal = document.getElementById('infoModal');
+    const objectiveDisplayView = document.getElementById('objectiveDisplayView');
+
+    const defaultObjective = 
+      "<p>Welcome! I specialize in bridging structural user interfaces with high-converting promotional aesthetics. My primary goal is to turn innovative designs into cleanly organized, production-ready code blocks.</p>" +
+      "<p>With an active focus on responsive framework development and layout architectures, I work to establish workflows where code meets creativity efficiently.</p>";
+
+    function updateBackground(theme) {
+      if (theme === 'light') {
+        heroSection.style.backgroundImage = 'none';
+      } else {
+        heroSection.style.backgroundImage = "url('main_bg.png')";
+      }
+    }
+
+    function toggleTheme() {
+      const current = document.body.getAttribute('data-theme');
+      const targetTheme = current === 'light' ? 'dark' : 'light';
+      document.body.setAttribute('data-theme', targetTheme);
+      localStorage.setItem('theme', targetTheme);
+      updateBackground(targetTheme);
+    }
+
+    function loadObjectiveContent() {
+      const storedObjective = localStorage.getItem('profile_objective');
+      if (storedObjective) {
+        objectiveDisplayView.innerHTML = storedObjective;
+      } else {
+        objectiveDisplayView.innerHTML = defaultObjective;
+      }
+    }
+
+    /* Modal Engine Event Dispatches */
+    function openModal() {
+      loadObjectiveContent(); 
+      infoModal.classList.add('active');
+      document.body.style.overflow = 'hidden'; 
+    }
+
+    function closeModal() {
+      infoModal.classList.remove('active');
+      document.body.style.overflow = ''; 
+    }
+
+    function closeModalViaOverlay(e) {
+      if (e.target === infoModal) {
+        closeModal();
+      }
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && infoModal.classList.contains('active')) {
+        closeModal();
+      }
+    });
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.body.setAttribute('data-theme', savedTheme);
+    updateBackground(savedTheme);
+    
+    loadObjectiveContent();
+  </script>
+</body>
+</html>

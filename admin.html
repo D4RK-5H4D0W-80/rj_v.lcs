@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects Content Manager | rj_v.lcs</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    main {
+      padding: 120px 8% 40px 8%;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2.5rem;
+      border-bottom: 2px solid rgba(100, 116, 139, 0.2);
+      padding-bottom: 1rem;
+      gap: 1rem;
+    }
+
+    .panel-title h1 {
+      font-size: 2rem;
+      color: var(--accent, #ffa500);
+      margin: 0;
+    }
+
+    .panel-title p {
+      margin: 0.3rem 0 0 0;
+    }
+
+    /* .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid rgba(100, 116, 139, 0.2);
+      padding-bottom: 1rem;
+      gap: 1rem;
+    }
+
+    .admin-header h1 {
+      font-size: 1.85rem;
+      color: #ffa500;
+      margin: 0;
+    } */
+
+    .back-btn {
+      padding: 0.6rem 1.4rem;
+      background: #64748b;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .split-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 2.5rem;
+    }
+
+    .form-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 2rem;
+      border-radius: 12px;
+      height: fit-content;
+    }
+
+    [data-theme="light"] .form-card {
+      background: #ffffff;
+      border: 1px solid rgba(100, 116, 139, 0.15);
+    }
+
+    .form-card h2 {
+      margin-top: 0;
+      color: #ffa500;
+      font-size: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #ffffff;
+    }
+
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%;
+      padding: 0.7rem;
+      border-radius: 6px;
+      border: 1px solid rgba(100, 116, 139, 0.4);
+      background: rgba(0, 0, 0, 0.15);
+      color: inherit;
+      box-sizing: border-box;
+      font-family: inherit;
+      color: #ffffff;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      height: 100px;
+    }
+
+    .form-group input[type="file"] {
+      padding: 0.5rem;
+      cursor: pointer;
+    }
+
+    [data-theme="light"] .form-group input, [data-theme="light"] .form-group textarea, [data-theme="light"] .form-group select {
+      background: #f8fafc;
+    }
+
+    .preview-box {
+      margin-top: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .preview-box img {
+      height: 60px;
+      width: 70px;
+      object-fit: cover;
+      border: 1px dashed rgba(100, 116, 139, 0.5);
+      border-radius: 4px;
+    }
+    .preview-box span {
+      font-size: 0.8rem;
+      color: #94a3b8;
+    }
+
+    .action-btn {
+      width: 100%;
+      padding: 0.75rem;
+      background: #ffa500;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .cancel-btn {
+      width: 100%;
+      padding: 0.6rem;
+      background: transparent;
+      border: 1px solid #ef4444;
+      color: #ef4444;
+      border-radius: 6px;
+      margin-top: 0.5rem;
+      cursor: pointer;
+      display: none;
+    }
+
+    .data-viewer-container {
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: #ffffff;
+    }
+
+    .tabs-bar {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .tab-btn {
+      padding: 0.5rem 1rem;
+      background: rgba(100, 116, 139, 0.2);
+      border: none;
+      color: inherit;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .tab-btn.active {
+      background: #ffa500;
+      color: white;
+      font-weight: bold;
+    }
+
+    .record-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem;
+      border-bottom: 1px solid rgba(100, 116, 139, 0.2);
+      gap: 1rem;
+    }
+
+    .record-item img {
+      height: 45px;
+      width: 55px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+
+    .record-details {
+      flex-grow: 1;
+    }
+
+    .record-details p {
+      margin: 0.2rem 0 0 0;
+      font-size: 0.85rem;
+      color: #94a3b8;
+    }
+
+    .record-actions {
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    .btn-edit {
+      background: #3b82f6;
+      color: white;
+      border: none;
+      padding: 0.36rem 0.7rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .btn-delete {
+      background: #ef4444;
+      color: white;
+      border: none;
+      padding: 0.36rem 0.7rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .pagination-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+      padding-top: 0.5rem;
+      color: #ffffff;
+    }
+
+    .page-nav-btn {
+      padding: 0.4rem 0.8rem;
+      background: rgba(100, 116, 139, 0.2);
+      color: inherit;
+      border: 1px solid rgba(100, 116, 139, 0.3);
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: background 0.2s ease;
+    }
+
+    .page-nav-btn:hover:not(:disabled) {
+      background: rgba(100, 116, 139, 0.4);
+    }
+
+    .page-nav-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .page-indicator {
+      font-size: 0.85rem;
+      color: #94a3b8;
+    }
+
+    .reset-zone {
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px dashed rgba(239, 68, 68, 0.4);
+    }
+
+    .btn-reset {
+      background: transparent;
+      border: 1px solid #ef4444;
+      color: #ef4444;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 992px) {
+      .split-layout { grid-template-columns: 1fr; }
+    }
+
+     @media (max-width: 600px) {
+      .panel-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.2rem;
+      }
+
+      .back-btn {
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+      }
+
+      .panel-title h1 {
+        font-size: 1.6rem;
+      }
+
+      .form-card {
+        padding: 1.25rem;
+      }
+
+      .btn-row {
+        flex-direction: column-reverse;
+        gap: 0.8rem;
+      }
+
+      .cancel-btn, .submit-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <div class="panel-header">
+      <!-- <div class="panel-title">
+        <h1>Journey Objective Editor</h1>
+        <p>Manage the statement text block displayed in your Home Screen's Learn More popup.</p>
+      </div> -->
+        <a href="index-manager.html" class="admin-edit-link">⚙️ Edit Objective</a>
+        <a href="about-manager.html" class="admin-edit-link">⚙️ Edit About</a>
+        <a href="skills-manager.html">⚙️ Edit Skills</a>
+        <a href="admin.html" class="admin-entry-btn">⚙️ Edit Projects</a>
+        <a href="apps-manager.html" class="admin-entry-btn">⚙️ Edit Applications</a>
+        <a href="contact-manager.html" class="admin-entry-btn">⚙️ Edit Contacts</a>
+          <a href="upload.html" class="admin-entry-btn">⚙️ Upload Image</a>
+        <a href="index.html" class="back-btn">Logout</a>
+    </div>
+
+    <!-- <div class="admin-header">
+      <div>
+        <h1>Projects Page Asset Registry</h1>
+        <p style="margin: 0.2rem 0 0 0; color: #94a3b8;">Insert, update, or remove top carousel illustrations or bottom development cards.</p>
+      </div>
+      <a href="projects.html" class="back-btn">← View Projects Page</a>
+    </div> -->
+
+    <div class="split-layout">
+      <div class="form-card">
+        <h2 id="formPanelTitle">Add Project</h2>
+        <form id="projectAssetForm" onsubmit="handleFormSubmission(event)">
+          <div class="form-group">
+            <label for="assetCategory">Select Project Type</label>
+            <select id="assetCategory" onchange="renderFormFieldsByScope(this.value)">
+              <option value="highlights">Website</option>
+              <option value="carousel">Graphic Design</option>
+            </select>
+          </div>
+
+          <div id="dynamicFormFields"></div>
+
+          <button type="submit" class="action-btn" id="submitActionBtn">Save</button>
+          <button type="button" class="cancel-btn" id="cancelEditBtn" onclick="abortEditingState()">Cancel</button>
+        </form>
+
+        <div class="reset-zone">
+          <p style="font-size: 0.85rem; margin-bottom: 0.5rem; color: #ef4444;">Looking to start fresh?</p>
+          <button class="btn-reset" onclick="restoreProjectDefaults()">Clear Manual Database & Restore Defaults</button>
+        </div>
+      </div>
+
+      <div class="data-viewer-container">
+        <div>
+          <div class="tabs-bar">
+            <button class="tab-btn active" id="tabHighlights" onclick="toggleActiveTab('highlights')">Website</button>
+            <button class="tab-btn" id="tabCarousel" onclick="toggleActiveTab('carousel')">Graphic Design</button>
+          </div>
+          <div id="explorerListTarget"></div>
+        </div>
+
+        <div class="pagination-controls" id="paginationControlsBox" style="display: none;">
+          <button class="page-nav-btn" id="prevPageBtn" onclick="changeExplorerPage(-1)">❮ Previous</button>
+          <span class="page-indicator" id="pageNumberDisplay">Page 1 of 1</span>
+          <button class="page-nav-btn" id="nextPageBtn" onclick="changeExplorerPage(1)">Next ❯</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // document.body.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');
+
+    let currentTab = 'highlights';
+    let editingId = null;
+    let base64ImageOutput = "";
+
+    const itemsPerPage = 5;
+    let currentHighlightsPage = 1;
+    let currentCarouselPage = 1;
+
+    const highlightMarkup = `
+      <div class="form-group">
+        <label for="cardTitle">Card Title Header</label>
+        <input type="text" id="cardTitle" placeholder="e.g., Cloud Security Node" required>
+      </div>
+      <div class="form-group">
+        <label for="cardDesc">Description Content Summary</label>
+        <textarea id="cardDesc" placeholder="Describe the structural framework parameters..." required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="cardLink">Project View Target Link (URL or Local HTML File)</label>
+        <input type="text" id="cardLink" placeholder="e.g., apps.html or https://github.com" required>
+      </div>
+      <div class="form-group">
+        <label for="cardFile">Select Card Image Asset File</label>
+        <input type="file" id="cardFile" accept="image/*" onchange="convertImageFileToBase64(this)">
+        <div class="preview-box">
+          <img id="assetPreview" src="images/web design.png">
+          <span id="previewStatus">No custom image file selected</span>
+        </div>
+      </div>
+    `;
+
+    const carouselMarkup = `
+      <div class="form-group">
+        <label for="slideAlt">Slide Descriptive Text (Alt Tag)</label>
+        <input type="text" id="slideAlt" placeholder="e.g., Refreshing Citrus Beverage Design Concept" required>
+      </div>
+      <div class="form-group">
+        <label for="slideFile">Select Slide Graphic Illustration File</label>
+        <input type="file" id="slideFile" accept="image/*" onchange="convertImageFileToBase64(this)">
+        <div class="preview-box">
+          <img id="assetPreview" src="images/web design.png">
+          <span id="previewStatus">No custom image file selected</span>
+        </div>
+      </div>
+    `;
+
+    function renderFormFieldsByScope(scope) {
+      const container = document.getElementById('dynamicFormFields');
+      container.innerHTML = (scope === 'highlights') ? highlightMarkup : carouselMarkup;
+      
+      if(scope === 'highlights' && !editingId) {
+        document.getElementById('cardLink').value = "apps.html";
+      }
+      base64ImageOutput = ""; 
+    }
+
+    function convertImageFileToBase64(input) {
+      const file = input.files[0];
+      const preview = document.getElementById('assetPreview');
+      const status = document.getElementById('previewStatus');
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          base64ImageOutput = e.target.result;
+          preview.src = base64ImageOutput;
+          status.textContent = `Selected File: ${file.name}`;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function toggleActiveTab(tabName) {
+      currentTab = tabName;
+      document.getElementById('tabHighlights').classList.toggle('active', tabName === 'highlights');
+      document.getElementById('tabCarousel').classList.toggle('active', tabName === 'carousel');
+      populateExplorerView();
+    }
+
+    function populateExplorerView() {
+      const container = document.getElementById('explorerListTarget');
+      const paginationBox = document.getElementById('paginationControlsBox');
+      const dataKey = currentTab === 'highlights' ? 'development_highlights' : 'portfolio_slides';
+      const storageArray = JSON.parse(localStorage.getItem(dataKey)) || [];
+
+      if (storageArray.length === 0) {
+        container.innerHTML = `<p style="padding: 1.5rem; text-align: center; color: #94a3b8;">No records detected within this scope configuration area.</p>`;
+        paginationBox.style.display = "none";
+        return;
+      }
+
+      const totalItems = storageArray.length;
+      const totalPages = Math.ceil(totalItems / itemsPerPage);
+      let currentPage = currentTab === 'highlights' ? currentHighlightsPage : currentCarouselPage;
+
+      if (currentPage > totalPages) {
+        currentPage = totalPages;
+        if (currentTab === 'highlights') currentHighlightsPage = totalPages;
+        else currentCarouselPage = totalPages;
+      }
+      if (currentPage < 1) currentPage = 1;
+
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      const paginatedItemsSlice = storageArray.slice(startIndex, endIndex);
+
+      if (currentTab === 'highlights') {
+        container.innerHTML = paginatedItemsSlice.map(item => `
+          <div class="record-item">
+            <img src="${item.image}" onerror="this.src='images/web design.png'">
+            <div class="record-details">
+              <strong>${item.title}</strong>
+              <p style="margin-bottom: 0.1rem;">Link target: <code style="color: #ffa500;">${item.link || 'apps.html'}</code></p>
+              <p>${item.desc.length > 55 ? item.desc.substring(0, 55) + '...' : item.desc}</p>
+            </div>
+            <div class="record-actions">
+              <button class="btn-edit" onclick="triggerEditSequence('highlights', '${item.id}')">Edit</button>
+              <button class="btn-delete" onclick="triggerDeleteSequence('highlights', '${item.id}')">Remove</button>
+            </div>
+          </div>
+        `).join('');
+      } else {
+        container.innerHTML = paginatedItemsSlice.map(item => `
+          <div class="record-item">
+            <img src="${item.src}" onerror="this.src='images/web design.png'">
+            <div class="record-details">
+              <strong>Slide Node Reference ID: ${item.id}</strong>
+              <p>Alt text reference: "${item.alt || 'Untitled graphic asset'}"</p>
+            </div>
+            <div class="record-actions">
+              <button class="btn-edit" onclick="triggerEditSequence('carousel', '${item.id}')">Edit</button>
+              <button class="btn-delete" onclick="triggerDeleteSequence('carousel', '${item.id}')">Remove</button>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      if (totalPages > 1) {
+        paginationBox.style.display = "flex";
+        document.getElementById('pageNumberDisplay').textContent = `Page ${currentPage} of ${totalPages}`;
+        document.getElementById('prevPageBtn').disabled = (currentPage === 1);
+        document.getElementById('nextPageBtn').disabled = (currentPage === totalPages);
+      } else {
+        paginationBox.style.display = "none";
+      }
+    }
+
+    function changeExplorerPage(step) {
+      if (currentTab === 'highlights') {
+        currentHighlightsPage += step;
+      } else {
+        currentCarouselPage += step;
+      }
+      populateExplorerView();
+    }
+
+    function handleFormSubmission(e) {
+      e.preventDefault();
+      const scopeSelection = document.getElementById('assetCategory').value;
+      const dbKey = scopeSelection === 'highlights' ? 'development_highlights' : 'portfolio_slides';
+      let dataList = JSON.parse(localStorage.getItem(dbKey)) || [];
+
+      if (editingId) {
+        dataList = dataList.map(item => {
+          if (item.id === editingId) {
+            if (scopeSelection === 'highlights') {
+              item.title = document.getElementById('cardTitle').value.trim();
+              item.desc = document.getElementById('cardDesc').value.trim();
+              item.link = document.getElementById('cardLink').value.trim();
+              if (base64ImageOutput !== "") item.image = base64ImageOutput;
+            } else {
+              item.alt = document.getElementById('slideAlt').value.trim();
+              if (base64ImageOutput !== "") item.src = base64ImageOutput;
+            }
+          }
+          return item;
+        });
+        alert("Portfolio data structure updated successfully!");
+      } else {
+        const initialPrefix = scopeSelection === 'highlights' ? 'card_' : 'slide_';
+        const freshEntry = { id: initialPrefix + Date.now() };
+
+        if (scopeSelection === 'highlights') {
+          freshEntry.title = document.getElementById('cardTitle').value.trim();
+          freshEntry.desc = document.getElementById('cardDesc').value.trim();
+          freshEntry.link = document.getElementById('cardLink').value.trim() || "apps.html";
+          freshEntry.image = base64ImageOutput !== "" ? base64ImageOutput : "images/web design.png";
+        } else {
+          freshEntry.alt = document.getElementById('slideAlt').value.trim();
+          freshEntry.src = base64ImageOutput !== "" ? base64ImageOutput : "images/web design.png";
+        }
+        dataList.push(freshEntry);
+        
+        const targetLastPage = Math.ceil(dataList.length / itemsPerPage);
+        if (scopeSelection === 'highlights') currentHighlightsPage = targetLastPage;
+        else currentCarouselPage = targetLastPage;
+
+        alert("New asset successfully recorded into database arrays!");
+      }
+
+      localStorage.setItem(dbKey, JSON.stringify(dataList));
+      abortEditingState();
+      toggleActiveTab(scopeSelection);
+    }
+
+    function triggerEditSequence(scope, id) {
+      editingId = id;
+      const dbKey = scope === 'highlights' ? 'development_highlights' : 'portfolio_slides';
+      const list = JSON.parse(localStorage.getItem(dbKey)) || [];
+      const selectedItem = list.find(i => i.id === id);
+
+      if (!selectedItem) return;
+
+      document.getElementById('assetCategory').value = scope;
+      document.getElementById('assetCategory').disabled = true;
+      renderFormFieldsByScope(scope);
+
+      if (scope === 'highlights') {
+        document.getElementById('cardTitle').value = selectedItem.title;
+        document.getElementById('cardDesc').value = selectedItem.desc;
+        document.getElementById('cardLink').value = selectedItem.link || "apps.html";
+        document.getElementById('assetPreview').src = selectedItem.image;
+        document.getElementById('previewStatus').textContent = "Keep empty to preserve active asset graphic";
+        base64ImageOutput = selectedItem.image;
+      } else {
+        document.getElementById('slideAlt').value = selectedItem.alt;
+        document.getElementById('assetPreview').src = selectedItem.src;
+        document.getElementById('previewStatus').textContent = "Keep empty to preserve active asset graphic";
+        base64ImageOutput = selectedItem.src;
+      }
+
+      document.getElementById('formPanelTitle').textContent = "Edit Selected Project";
+      document.getElementById('submitActionBtn').textContent = "Save Changes";
+      document.getElementById('cancelEditBtn').style.display = 'block';
+    }
+
+    function abortEditingState() {
+      editingId = null;
+      base64ImageOutput = "";
+      document.getElementById('projectAssetForm').reset();
+      document.getElementById('assetCategory').disabled = false;
+      renderFormFieldsByScope(document.getElementById('assetCategory').value);
+      document.getElementById('formPanelTitle').textContent = "Add Project";
+      document.getElementById('submitActionBtn').textContent = "Save";
+      document.getElementById('cancelEditBtn').style.display = 'none';
+    }
+
+    function triggerDeleteSequence(scope, id) {
+      if (confirm("Are you sure you want to permanently discard this item? This action will adjust live visual outputs.")) {
+        const dbKey = scope === 'highlights' ? 'development_highlights' : 'portfolio_slides';
+        let items = JSON.parse(localStorage.getItem(dbKey)) || [];
+        items = items.filter(i => i.id !== id);
+        localStorage.setItem(dbKey, JSON.stringify(items));
+
+        if (editingId === id) abortEditingState();
+        populateExplorerView();
+      }
+    }
+
+    function restoreProjectDefaults() {
+      if (confirm("Reset layout settings back to source configuration defaults? This clears custom cards and slide indexes.")) {
+        localStorage.removeItem('portfolio_slides');
+        localStorage.removeItem('development_highlights');
+        location.reload();
+      }
+    }
+
+    renderFormFieldsByScope('highlights');
+    populateExplorerView();
+  </script>
+</body>
+</html>

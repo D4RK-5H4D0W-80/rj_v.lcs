@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Me | rj_v.lcs</title>
+   <link rel="icon" href="images/logo.png" type="image/x-icon">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ==========================================
+       MAIN APP FRAMEWORK & PERSISTENT LAYOUTS
+       ========================================== */
+    main {
+      padding: 120px 10% 60px 10%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      gap: 5rem;
+    }
+
+    /* Section Header Decorator Components */
+    .section-title {
+      position: relative;
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 2.5rem;
+      color: var(--text-main, #ffffff);
+      display: inline-block;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background: var(--accent, #ffa500);
+      border-radius: 2px;
+    }
+
+    /* ==========================================
+       SECTION 1: BIOGRAPHY AND PROFILE DETAILS
+       ========================================== */
+    .profile-container {
+      display: flex;
+      gap: 4rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .profile-image-frame {
+      flex: 1;
+      max-width: 400px;
+      position: relative;
+    }
+
+    .profile-image-frame img {
+      width: 100%;
+      height: auto;
+      border-radius: 16px;
+      /* box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      border: 2px solid rgba(255, 255, 255, 0.05); */
+      display: block;
+    }
+
+    .profile-text-content {
+      flex: 1.5;
+    }
+
+    .profile-text-content p { color: #ffffff; }
+
+    [data-theme="light"] .profile-text-content h2 { color: #ffa500 !important; }
+    [data-theme="light"] .profile-text-content p { color: #64748b  !important; }
+
+    .profile-text-content h2 {
+      font-size: 1.5rem;
+      color: var(--accent, #ffa500);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .profile-text-content p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      /* color: var(--text-muted, #94a3b8); */
+      margin-bottom: 1.5rem;
+      text-align: justify;
+      text-indent: 50px;
+    }
+
+    .admin-link-row {
+      margin-top: 2rem;
+    }
+
+    .admin-edit-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--accent, #ffa500);
+      font-size: 0.95rem;
+      text-decoration: underline;
+      font-weight: 500;
+    }
+
+    /* ==========================================
+       SECTION 2: CHRONOLOGICAL EXPERIENCE TIMELINE
+       ========================================== */
+    .timeline-container {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+      padding-left: 2rem;
+    }
+
+    /* Vertical line guide track */
+    .timeline-container::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      height: calc(100% - 20px);
+      width: 2px;
+      background: rgba(148, 163, 184, 0.2);
+    }
+
+    .timeline-node {
+      position: relative;
+      margin-bottom: 3.5rem;
+    }
+
+    .timeline-node:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Circular indicator bullet points */
+    .timeline-node::before {
+      content: '';
+      position: absolute;
+      left: calc(-2rem - 6px);
+      top: 6px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--body-bg, #0b0f19);
+      border: 3px solid var(--accent, #ffa500);
+      z-index: 2;
+      box-shadow: 0 0 0 4px rgba(255, 165, 0, 0.15);
+    }
+
+    .timeline-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.8rem;
+      gap: 1rem;
+    }
+
+    .timeline-role {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--text-main, #ffffff);
+    }
+
+    .timeline-duration {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--accent, #ffa500);
+      background: rgba(255, 165, 0, 0.08);
+      padding: 0.2rem 0.8rem;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 165, 0, 0.15);
+      white-space: nowrap;
+    }
+
+    .timeline-company { color: #ffffff; }
+    [data-theme="light"] .timeline-company { color: rgba(255, 255, 255, 0.7)  !important; }
+
+    .timeline-company {
+      font-size: 1.05rem;
+      font-weight: 500;
+      /* color: rgba(255, 255, 255, 0.7); */
+      margin-bottom: 0.2rem;
+    }
+
+    .timeline-location { color: #ffffff; }
+    [data-theme="light"] .timeline-location { color: #94a3b8  !important; }
+
+    .timeline-location {
+      font-size: 0.9rem;
+      font-weight: 400;
+      /* color: var(--text-muted, #94a3b8); */
+      margin-bottom: 0.8rem;
+      font-style: italic;
+    }
+
+    .timeline-description { color: #ffffff; }
+    [data-theme="light"] .timeline-description { color: #64748b  !important; }
+
+    .timeline-description {
+      font-size: 1rem;
+      line-height: 1.6;
+      /* color: var(--text-muted, #94a3b8); */
+      text-align: justify;
+    
+    }
+
+    /* ==========================================
+       RESPONSIVE CONFIGURATIONS
+       ========================================== */
+    @media (max-width: 900px) {
+      main {
+        padding: 120px 6% 40px 6%;
+        gap: 4rem;
+      }
+
+      .profile-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 2.5rem;
+      }
+
+      .profile-image-frame {
+        max-width: 280px;
+        margin: 0 auto;
+      }
+
+      .section-title::after {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .timeline-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.4rem;
+      }      
+    }
+
+     /* ==========================================
+       BRAND LOGO & USER ICON LAYOUT BLOCK
+       ========================================== */
+    .brand-container {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-user-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-main, #ffffff);
+      transition: color 0.2s ease, transform 0.2s ease;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .brand-user-icon:hover {
+      color: #ffa500;
+      transform: scale(1.05);
+    }
+
+    .brand-user-icon svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+     <div class="brand-container">
+      <h3>rj_v.lcs</h3>
+      <a href="login.html" class="brand-user-icon" title="Admin Access Panel">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+        </svg>
+      </a>
+    </div>
+
+    <div class="nav-right">
+      <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
+      <label for="menu-toggle" class="burger-menu-btn">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+      <ul>
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <!-- <li class="dropdown">
+          <a href="skills.html">Skills ▾</a>
+          <ul class="dropdown-menu">
+            <li><a href="skills.html#technical">Technical Skills</a></li>
+            <li><a href="skills.html#personal">Personal Skills</a></li>
+          </ul>
+        </li> -->
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="apps.html">Applications</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+    </div>
+  </nav>
+
+  <main>
+      <section>
+      <h1 class="section-title">About Me</h1>
+      <div class="profile-container">
+        <div class="profile-image-frame">
+          <img src="images/rjvlcs_about_img.svg" alt="rj_v.lcs Professional Portrait Visual representation">
+        </div>
+        <div class="profile-text-content">
+          <h2 id="bioSubtitle">Creative Content Specialist</h2>
+          <div id="bioBodyParagraphs">
+            </div>
+          <div class="admin-link-row">
+            <!-- <a href="about-manager.html" class="admin-edit-link">⚙️ Manage About & Experience Text</a> -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h1 class="section-title">Work Experience</h1>
+      <div class="timeline-container" id="timelineHook">
+        </div>
+    </section>
+  </main>
+
+  <script>
+    /* Theme State Engine */
+    function toggleTheme() {
+      const current = document.body.getAttribute('data-theme');
+      const targetTheme = current === 'light' ? 'dark' : 'light';
+      document.body.setAttribute('data-theme', targetTheme);
+      localStorage.setItem('theme', targetTheme);
+    }
+    document.body.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');
+
+    /* ==========================================
+       DATA ARCHITECTURE INITIAL SEEDING ENGINE
+       ========================================== */
+    const defaultBio = {
+      subtitle: "Creative Content Specialist",
+      paragraphs: [
+        "Hello! I am a passionate creator focused on crafting high-converting promotional designs, visual branding layouts, and tailored advertisements that connect deeply with target audiences.",
+        "With a sharp eye for layout composition, color balance, and typography architectures, I transform standard brand briefs into exceptional marketing collateral. My mission is to merge structural clarity with engaging visuals to elevate digital interfaces.",
+        "When I'm not designing, I dedicate time to coding dynamic application scripts, refining front-end frameworks, and analyzing conversion metrics to optimize end-user experiences."
+      ]
+    };
+
+    const defaultExperience = [
+      {
+        id: "exp1",
+        role: "Lead UI & Brand Designer",
+        company: "Vivid Media Dynamics",
+        location: "Remote / New York",
+        duration: "2024 - Present",
+        desc: "Spearheaded visual design strategies for digital ad campaigns. Coordinated with front-end development branches to design beautiful interfaces, interactive web apps, and high-converting commercial banners."
+      },
+      {
+        id: "exp2",
+        role: "Graphic Design Specialist",
+        company: "Pixel Perfect Agency",
+        location: "San Francisco, CA (Hybrid)",
+        duration: "2022 - 2024",
+        desc: "Designed bespoke vector typography assets, social media branding kits, food and product advertisement prints, and high-impact presentation slides tailored to tech industry clients."
+      }
+    ];
+
+    // Read stored profile states or apply defaults
+    let activeBio = JSON.parse(localStorage.getItem('about_bio')) || defaultBio;
+    let activeExperience = JSON.parse(localStorage.getItem('about_experience')) || defaultExperience;
+
+    if(!localStorage.getItem('about_bio')) localStorage.setItem('about_bio', JSON.stringify(defaultBio));
+    if(!localStorage.getItem('about_experience')) localStorage.setItem('about_experience', JSON.stringify(defaultExperience));
+
+    /* Helper Engine to sort Experience entries dynamically by Year descending */
+    function getLatestYear(durationStr) {
+      if (!durationStr) return 0;
+      if (/present|current/i.test(durationStr)) return 9999;
+      const years = durationStr.match(/\b\d{4}\b/g);
+      if (years && years.length > 0) {
+        return Math.max(...years.map(Number));
+      }
+      return 0;
+    }
+
+    /* ==========================================
+       DOM INJECTION AND MOUNT OPERATIONS
+       ========================================== */
+    function renderAboutPageContent() {
+      // 1. Render Biography Nodes
+      document.getElementById('bioSubtitle').innerText = activeBio.subtitle;
+      const bioParagraphsContainer = document.getElementById('bioBodyParagraphs');
+      bioParagraphsContainer.innerHTML = '';
+      
+      activeBio.paragraphs.forEach(pText => {
+        const pNode = document.createElement('p');
+        pNode.innerText = pText;
+        bioParagraphsContainer.appendChild(pNode);
+      });
+
+      // 2. Render Chronological Experience Nodes (Sorted: Newest at top)
+      const timelineTrack = document.getElementById('timelineHook');
+      timelineTrack.innerHTML = '';
+
+      if(activeExperience.length === 0) {
+        timelineTrack.innerHTML = `<p style="color:var(--text-muted); font-style:italic;">No milestones listed. Open the Manager Panel to add them!</p>`;
+        return;
+      }
+
+      const sortedExperience = [...activeExperience].sort((a, b) => {
+        return getLatestYear(b.duration) - getLatestYear(a.duration);
+      });
+
+      sortedExperience.forEach(node => {
+        const itemBlock = document.createElement('div');
+        itemBlock.className = 'timeline-node';
+        itemBlock.innerHTML = `
+          <div class="timeline-header">
+            <div class="timeline-role">${node.role}</div>
+            <div class="timeline-duration">${node.duration}</div>
+          </div>
+          <div class="timeline-company">${node.company}</div>
+          <div class="timeline-location">📍 ${node.location || 'Not Specified'}</div>
+          <div class="timeline-description">${node.desc}</div>
+        `;
+        timelineTrack.appendChild(itemBlock);
+      });
+    }
+
+    // Execute Layout Build Loop
+    renderAboutPageContent();
+  </script>
+</body>
+</html>

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Applications | rj_v.lcs</title>
+  <link rel="icon" href="images/logo.png" type="image/x-icon">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Content grouping states controls */
+    .skills-category-content {
+      display: none;
+      animation: fadeIn 0.4s ease-in-out forwards;
+      height: 100%;
+    }
+
+    .skills-category-content.active { 
+      display: block; 
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Set main layout to precisely fill remaining screen height without scrolling */
+    main {
+       padding: 20px 0 40px 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden; /* Clips any unintended layout overflow tightly to the window */
+    }
+
+    /* Side-by-Side Flex Layout Engine for Custom Media Sections */
+    .personal-skills-layout {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end; /* Roots image to the absolute bottom edge */
+      justify-content: space-between;
+      gap: 3rem;
+      height: calc(100vh - 140px); 
+      width: 100%;
+      padding: 0 8%;
+      box-sizing: border-box;
+    }
+
+    /* Left Side Corner: Container pulling graphic straight down to baseline window edge */
+    .skills-image-container {
+      flex: 1.5; /* Slightly increased to give the larger image more breathing room */
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-end;
+      height: 100%;
+    }
+
+    .skills-portrait-img {
+      width: 100%; 
+      max-width: 600px; /* Increased from 400px to make the image bigger */
+      height: auto;
+      max-height: 95%; /* Increased from 80% to allow it to fill more vertical space */
+      display: block;
+      object-fit: contain; 
+    }
+
+    /* Right Side Center Corner: Isolated image container aligned to center */
+    .skills-text-container {
+      flex: 1.4;
+      align-self: center; /* Centers the interactive workspace elements cleanly */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-bottom: 60px; 
+    }
+
+    /* Clickable Link Document Showcase Engine - Fixed Size 300x400px */
+    .clickable-document-link {
+      display: block;
+      width: 400px;
+      height: 500px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2px solid rgba(255, 165, 0, 0.2);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      background: rgba(0, 0, 0, 0.2);
+      box-sizing: border-box;
+      border: #ffa500 3px solid;
+    }
+
+    .clickable-document-link:hover {
+      border-color: #ffa500;
+      transform: scale(1.02);
+      box-shadow: 0 10px 20px rgba(255, 165, 0, 0.15);
+    }
+
+    .showcase-display-img {
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+      display: block;
+      transition: opacity 0.3s ease;
+    }
+
+    .clickable-document-link:hover .showcase-display-img {
+      opacity: 0.9;
+    }
+
+    /* Mobile Responsive Adaptation */
+    @media (max-width: 992px) {
+      .personal-skills-layout {
+        gap: 1.5rem;
+        padding: 0 4%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      main {
+        padding: 20px 0 40px 0;
+        overflow: visible;
+      }
+      .personal-skills-layout { 
+        flex-direction: column-reverse;
+        text-align: center; 
+        gap: 2.5rem; 
+        height: auto;
+        padding: 0 6%;
+        align-items: center;
+      }
+      .skills-image-container { 
+        width: 100%; 
+        justify-content: center; 
+        height: auto;
+      }
+      .skills-portrait-img { 
+        width: 100%;
+        max-width: 340px; /* Slightly adjusted upward for mobile view consistency */
+        height: auto;
+        max-height: none;
+      }
+      .skills-text-container { 
+        width: 100%; 
+        align-self: auto;
+        padding-bottom: 0;
+      }
+    }
+
+    /* ==========================================
+       BRAND LOGO & USER ICON LAYOUT BLOCK
+       ========================================== */
+    .brand-container {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-user-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-main, #ffffff);
+      transition: color 0.2s ease, transform 0.2s ease;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .brand-user-icon:hover {
+      color: #ffa500;
+      transform: scale(1.05);
+    }
+
+    .brand-user-icon svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+    }
+
+    /* ==========================================
+       BRAND DROPDOWN MENU STRATEGY STYLES
+       ========================================== */
+    .skills-select-wrapper {
+      margin-top: 90px;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: center; 
+      width: 100%;
+      padding: 0 1rem;
+      box-sizing: border-box;
+      z-index: 10;
+    }
+
+    .skills-dropdown-selector {
+      background: transparent;
+      border: 2px solid #ffa500;
+      color: #ffa500;
+      font-size: 1.6rem;
+      font-weight: bold;
+      padding: 0.3rem 0.8rem;
+      border-radius: 6px;
+      cursor: pointer;
+      outline: none;
+      font-family: inherit;
+      transition: all 0.3s ease;
+      text-align: center; 
+      max-width: 100%;
+    }
+
+    @media (max-width: 600px) {
+      .skills-dropdown-selector {
+        font-size: 1.15rem;
+      }
+      .skills-select-wrapper {
+        margin-top: 105px;
+      }
+    }
+
+    .skills-dropdown-selector:focus {
+      box-shadow: 0 0 8px rgba(255, 165, 0, 0.4);
+    }
+
+    .skills-dropdown-selector option {
+      background: #1e293b;
+      color: #ffffff;
+      font-size: 1.1rem;
+      font-weight: normal;
+    }
+
+    [data-theme="light"] .skills-dropdown-selector option {
+      background: #ffffff;
+      color: #64748b;
+    }
+
+    .admin-edit-badge-box {
+      text-align: center;
+      margin-top: -0.5rem;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="brand-container">
+      <h3>rj_v.lcs</h3>
+      <a href="login.html" class="brand-user-icon" title="Admin Access Panel">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+        </svg>
+      </a>
+    </div>
+
+    <div class="nav-right">
+      <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
+      <label for="menu-toggle" class="burger-menu-btn">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+      <ul>
+        <li><a href="index.html" id="nav-home">Home</a></li>
+        <li><a href="about.html" id="nav-about">About</a></li>
+        <li><a href="skills.html" id="nav-skills">Skills</a></li>
+        <li><a href="projects.html" id="nav-projects">Projects</a></li>
+        <li><a href="apps.html" id="nav-apps" class="active">Applications</a></li>
+        <li><a href="contact.html" id="nav-contact">Contact</a></li>
+      </ul>
+      <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+    </div>
+  </nav>
+
+  <main>
+    <div class="skills-select-wrapper">
+      <select id="skills-route-select" class="skills-dropdown-selector" onchange="handleDropdownChange(this.value)">
+        <!-- Dynamically managed option layout spaces structural block inside runtime initializers below -->
+      </select>
+    </div>
+
+    <div class="admin-edit-badge-box"></div>
+
+    <div id="document-view-container" class="skills-category-content active">
+      <div class="personal-skills-layout">
+        
+        <div class="skills-image-container">
+          <img src="images/apps_image.svg" alt="Decoration Vector Artwork" class="skills-portrait-img" onerror="this.src='images/logo.png'">
+        </div>
+
+        <div class="skills-text-container">
+          <a href="#" id="doc-clickable-link" target="_blank" class="clickable-document-link">
+            <img src="images/IPCR.png" id="doc-display-img" alt="Document Registry Showcase" class="showcase-display-img">
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function toggleTheme() {
+      const current = document.body.getAttribute('data-theme');
+      const targetTheme = current === 'light' ? 'dark' : 'light';
+      document.body.setAttribute('data-theme', targetTheme);
+      localStorage.setItem('theme', targetTheme);
+    }
+    document.body.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');
+
+    // Manage navigation link click toggle frames
+    document.querySelectorAll('.nav-right ul li a').forEach(link => {
+      link.addEventListener('click', function() {
+        document.querySelectorAll('.nav-right ul li a').forEach(el => el.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    /* =============================================================
+       DOCUMENT CORE SYSTEM METADATA DATA SOURCE CONFIGURATION
+       ============================================================= */
+    const defaultRegistryDataset = {
+      pds: { image: "images/IPCR.png", link: "#" },
+      wes: { image: "images/IPCR.png", link: "#" },
+      letter: { image: "images/IPCR.png", link: "#" },
+      resume: { image: "images/IPCR.png", link: "#" },
+      eligibility: { image: "images/IPCR.png", link: "#" },
+      tor: { image: "images/IPCR.png", link: "#" },
+      awards: { image: "images/IPCR.png", link: "#" }
+    };
+
+    const defaultOptionsMetadata = [
+      { value: "pds", text: "Personal Data Sheet" },
+      { value: "wes", text: "Work Experience Sheet" },
+      { value: "letter", text: "Application Letter" },
+      { value: "resume", text: "Resume" },
+      { value: "eligibility", text: "Certification of Eligibility" },
+      { value: "tor", text: "Official Transcript of Record" },
+      { value: "awards", text: "Certificates and Achievements" }
+    ];
+
+    // Populates the dropdown structure dynamically from the manager data tracks
+    function generateDynamicDropdownMenu() {
+      if (!localStorage.getItem('document_options_metadata')) {
+        localStorage.setItem('document_options_metadata', JSON.stringify(defaultOptionsMetadata));
+      }
+      
+      const selectElement = document.getElementById('skills-route-select');
+      const metadataList = JSON.parse(localStorage.getItem('document_options_metadata'));
+      
+      selectElement.innerHTML = ""; // Clear baseline template content
+      
+      metadataList.forEach(optionData => {
+        const opt = document.createElement('option');
+        opt.value = optionData.value;
+        opt.textContent = optionData.text;
+        selectElement.appendChild(opt);
+      });
+    }
+
+    function fetchAndVerifyRegistryData() {
+      if (!localStorage.getItem('document_registry_dataset')) {
+        localStorage.setItem('document_registry_dataset', JSON.stringify(defaultRegistryDataset));
+      }
+      generateDynamicDropdownMenu();
+      renderActiveRouteView();
+    }
+
+    function renderActiveRouteView() {
+      const dataset = JSON.parse(localStorage.getItem('document_registry_dataset')) || defaultRegistryDataset;
+      const selector = document.getElementById('skills-route-select');
+      const activeKey = selector.value;
+      
+      // Safety anchor fall back onto baseline pds key space if empty configuration detected
+      const docData = dataset[activeKey] || dataset['pds'] || { image: "images/IPCR.png", link: "#" };
+      
+      // Setup preview images and target reference navigation triggers
+      const imgNode = document.getElementById('doc-display-img');
+      imgNode.src = docData.image;
+      imgNode.onerror = function() { this.src = 'images/IPCR.png'; };
+      
+      document.getElementById('doc-clickable-link').href = docData.link;
+
+      // Retain flash fading element trigger
+      const container = document.getElementById('document-view-container');
+      container.classList.remove('active');
+      void container.offsetWidth; // Force element recalculation cycle
+      container.classList.add('active');
+    }
+
+    function handleDropdownChange(category) {
+      window.location.hash = category;
+      renderActiveRouteView();
+    }
+
+    function checkHashRoute() {
+      generateDynamicDropdownMenu(); // Synchronize listing matrix states cleanly
+      
+      const hash = window.location.hash.replace('#', '');
+      const selectElement = document.getElementById('skills-route-select');
+      
+      // Check if current URL hash matches valid drop down options parameters
+      let foundOption = false;
+      for (let i = 0; i < selectElement.options.length; i++) {
+        if (selectElement.options[i].value === hash) {
+          selectElement.value = hash;
+          foundOption = true;
+          break;
+        }
+      }
+      
+      if (!foundOption && selectElement.options.length > 0) {
+        selectElement.selectedIndex = 0;
+      }
+      
+      renderActiveRouteView();
+    }
+
+    // Lifecycle Boots Initializers
+    window.addEventListener('DOMContentLoaded', () => {
+      fetchAndVerifyRegistryData();
+      checkHashRoute();
+    });
+    window.addEventListener('hashchange', checkHashRoute);
+  </script>
+</body>
+</html>

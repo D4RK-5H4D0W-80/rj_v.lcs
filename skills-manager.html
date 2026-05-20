@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skills Registry Dashboard | rj_v.lcs</title>
+  <link rel="icon" href="images/logo.png" type="image/x-icon">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    main {
+      padding: 120px 8% 40px 8%;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2.5rem;
+      border-bottom: 2px solid rgba(100, 116, 139, 0.2);
+      padding-bottom: 1rem;
+      gap: 1rem;
+    }
+
+    .panel-title h1 {
+      font-size: 2rem;
+      color: var(--accent, #ffa500);
+      margin: 0;
+    }
+
+    .panel-title p {
+      margin: 0.3rem 0 0 0;
+    }
+
+    .back-btn {
+      padding: 0.6rem 1.4rem;
+      background: #64748b;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .split-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 2.5rem;
+    }
+
+    .form-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 2rem;
+      border-radius: 12px;
+      height: fit-content;
+    }
+
+    [data-theme="light"] .form-card {
+      background: #ffffff;
+      border: 1px solid rgba(100, 116, 139, 0.15);
+    }
+
+    .form-card h2 {
+      margin-top: 0;
+      color: #ffa500;
+      font-size: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #ffffff;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 0.7rem;
+      border-radius: 6px;
+      border: 1px solid rgba(100, 116, 139, 0.4);
+      background: rgba(0, 0, 0, 0.15);
+      color: #ffffff;
+      box-sizing: border-box;
+    }
+
+    .form-group input[type="file"] {
+      padding: 0.5rem;
+      cursor: pointer;
+    }
+
+    [data-theme="light"] .form-group input, [data-theme="light"] .form-group select {
+      background: #f8fafc;
+    }
+
+    .image-preview-box {
+      margin-top: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .image-preview-box img {
+      height: 50px;
+      width: 50px;
+      object-fit: contain;
+      border: 1px dashed rgba(100, 116, 139, 0.5);
+      padding: 2px;
+      border-radius: 4px;
+    }
+    .image-preview-box span {
+      font-size: 0.8rem;
+      color: #94a3b8;
+    }
+
+    .action-btn {
+      width: 100%;
+      padding: 0.75rem;
+      background: #ffa500;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .cancel-edit-btn {
+      width: 100%;
+      padding: 0.6rem;
+      background: transparent;
+      border: 1px solid #ef4444;
+      color: #ef4444;
+      border-radius: 6px;
+      margin-top: 0.5rem;
+      cursor: pointer;
+      display: none;
+    }
+
+    .data-table-container {
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      padding: 1rem;
+      color: #ffffff;
+    }
+
+    .section-toggle-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .tab-btn {
+      padding: 0.5rem 1rem;
+      background: rgba(100, 116, 139, 0.2);
+      border: none;
+      color: inherit;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .tab-btn.active {
+      background: #ffa500;
+      color: white;
+      font-weight: bold;
+    }
+
+    .data-list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem;
+      border-bottom: 1px solid rgba(100, 116, 139, 0.2);
+      gap: 1rem;
+    }
+
+    .data-list-item img {
+      height: 35px;
+      width: 35px;
+      object-fit: contain;
+    }
+
+    .item-details {
+      flex-grow: 1;
+    }
+
+    .item-actions {
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    .btn-edit {
+      background: #3b82f6;
+      color: white;
+      border: none;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .btn-delete {
+      background: #ef4444;
+      color: white;
+      border: none;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    /* Dedicated Button-based Pagination styling blocks */
+    .pagination-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+      font-size: 0.95rem;
+      user-select: none;
+      color: #ffffff;
+    }
+
+    .pagination-nav-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(100, 116, 139, 0.4);
+      color: #ffffff;
+      padding: 0.4rem 0.9rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    [data-theme="light"] .pagination-nav-btn {
+      background: #f8fafc;
+      border: 1px solid rgba(100, 116, 139, 0.2);
+      color: #0f172a;
+    }
+
+    .pagination-nav-btn:hover:not(:disabled) {
+      border-color: var(--accent, #ffa500);
+      background: var(--accent, #ffa500);
+      color: #ffffff;
+    }
+
+    .pagination-nav-btn:disabled {
+      background: rgba(0, 0, 0, 0.1);
+      border-color: rgba(100, 116, 139, 0.2);
+      color: #64748b;
+      cursor: not-allowed;
+      opacity: 0.4;
+    }
+
+    .danger-zone {
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px dashed rgba(239, 68, 68, 0.4);
+    }
+
+    .btn-reset {
+      background: transparent;
+      border: 1px solid #ef4444;
+      color: #ef4444;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 992px) {
+      .split-layout { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .panel-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.2rem;
+      }
+
+      .back-btn {
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+      }
+
+      .panel-title h1 {
+        font-size: 1.6rem;
+      }
+
+      .form-card {
+        padding: 1.25rem;
+      }
+
+      .btn-row {
+        flex-direction: column-reverse;
+        gap: 0.8rem;
+      }
+
+      .cancel-btn, .submit-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <div class="panel-header">
+      <!-- <div class="panel-title">
+        <h1>Journey Objective Editor</h1>
+        <p>Manage the statement text block displayed in your Home Screen's Learn More popup.</p>
+      </div> -->
+        <a href="index-manager.html" class="admin-edit-link">⚙️ Edit Objective</a>
+        <a href="about-manager.html" class="admin-edit-link">⚙️ Edit About</a>
+        <a href="skills-manager.html">⚙️ Edit Skills</a>
+        <a href="admin.html" class="admin-entry-btn">⚙️ Edit Projects</a>
+        <a href="apps-manager.html" class="admin-entry-btn">⚙️ Edit Applications</a>
+        <a href="contact-manager.html" class="admin-entry-btn">⚙️ Edit Contacts</a>
+          <a href="upload.html" class="admin-entry-btn">⚙️ Upload Image</a>
+        <a href="index.html" class="back-btn">Logout</a>
+    </div>
+
+    <div class="split-layout">
+      <div class="form-card">
+        <h2 id="form-panel-title">Add Skill Record</h2>
+        <form id="registryForm" onsubmit="saveFormEntry(event)">
+          <div class="form-group">
+            <label for="field-category">Select Skill Type</label>
+            <select id="field-category" onchange="adjustFormFieldsByCategory(this.value)">
+              <option value="technical">Technical Skill</option>
+              <option value="personal">Personal Skill</option>
+            </select>
+          </div>
+
+          <div id="dynamic-fields-container"></div>
+
+          <div class="form-group">
+            <label for="field-metric">Skill Competency Level Percentage (%)</label>
+            <select id="field-metric">
+              <script>
+                for(let i=100; i>=10; i-=5) {
+                  document.write(`<option value="${i}%">${i}%</option>`);
+                }
+              </script>
+            </select>
+          </div>
+
+          <button type="submit" class="action-btn" id="submit-action-btn">Save</button>
+          <button type="button" class="cancel-edit-btn" id="cancel-edit-btn" onclick="clearEditSessionState()">Cancel</button>
+        </form>
+
+        <div class="danger-zone">
+          <p style="font-size: 0.85rem; margin-bottom: 0.5rem; color: #ef4444;">Need to undo mistakes?</p>
+          <button class="btn-reset" onclick="revertToDefaults()">Wipe Custom Registry & Restore Baseline Defaults</button>
+        </div>
+      </div>
+
+      <div class="data-table-container">
+        <div class="section-toggle-tabs">
+          <button class="tab-btn active" id="tab-tech" onclick="switchDataTab('technical')">Technical List</button>
+          <button class="tab-btn" id="tab-pers" onclick="switchDataTab('personal')">Personal List</button>
+        </div>
+        
+        <div id="live-data-list-target"></div>
+
+        <div class="pagination-container" id="paginationControls" style="display: none;">
+          <button type="button" class="pagination-nav-btn" id="prevPageBtn" onclick="changePage(-1)">&lt; Previous</button>
+          <span id="pageProgressIndicator">Page 1 of 1</span>
+          <button type="button" class="pagination-nav-btn" id="nextPageBtn" onclick="changePage(1)">Next &gt;</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // document.body.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');
+
+    let currentActiveTab = 'technical';
+    let currentEditingId = null; 
+    let base64ImageString = ""; 
+
+    // Pagination Segment Configurations
+    let currentPage = 1;
+    const itemsPerPage = 5;
+
+    const technicalFieldsMarkup = `
+      <div class="form-group">
+        <label for="field-title">Skill Title Name</label>
+        <input type="text" id="field-title" placeholder="e.g., Python Architecture" required>
+      </div>
+      <div class="form-group">
+        <label for="field-image">Select Tech Icon Image File</label>
+        <input type="file" id="field-image" accept="image/*" onchange="processSelectedImageFile(this)">
+        <div class="image-preview-box">
+          <img id="img-preview" src="images/web design.png">
+          <span id="img-preview-status">Default or existing image path active</span>
+        </div>
+      </div>
+    `;
+
+    const personalFieldsMarkup = `
+      <div class="form-group">
+        <label for="field-statement">Personal Quality Statement</label>
+        <input type="text" id="field-statement" placeholder="e.g., High emotional intelligence under delivery stress" required>
+      </div>
+    `;
+
+    function adjustFormFieldsByCategory(cat) {
+      const targetBox = document.getElementById('dynamic-fields-container');
+      if (cat === 'technical') {
+        targetBox.innerHTML = technicalFieldsMarkup;
+        base64ImageString = ""; 
+      } else {
+        targetBox.innerHTML = personalFieldsMarkup;
+      }
+    }
+
+    function processSelectedImageFile(inputElement) {
+      const file = inputElement.files[0];
+      const preview = document.getElementById('img-preview');
+      const statusText = document.getElementById('img-preview-status');
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          base64ImageString = e.target.result;
+          preview.src = base64ImageString;
+          statusText.textContent = `Selected: ${file.name}`;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function switchDataTab(tab) {
+      currentActiveTab = tab;
+      currentPage = 1; // Always fall back to page 1 upon moving context lists
+      document.getElementById('tab-tech').classList.toggle('active', tab === 'technical');
+      document.getElementById('tab-pers').classList.toggle('active', tab === 'personal');
+      renderDataExplorerList();
+    }
+
+    function renderDataExplorerList() {
+      const targetContainer = document.getElementById('live-data-list-target');
+      const paginationControls = document.getElementById('paginationControls');
+      const prevPageBtn = document.getElementById('prevPageBtn');
+      const nextPageBtn = document.getElementById('nextPageBtn');
+      const pageProgressIndicator = document.getElementById('pageProgressIndicator');
+
+      const key = currentActiveTab === 'technical' ? 'dataset_technical_skills' : 'dataset_personal_skills';
+      const itemsList = JSON.parse(localStorage.getItem(key)) || [];
+
+      if(itemsList.length === 0) {
+        targetContainer.innerHTML = `<p style="padding:1rem; color:#94a3b8; text-align:center;">No skill registry entries configured inside this sector.</p>`;
+        paginationControls.style.display = 'none';
+        return;
+      }
+
+      // Pagination Calculation Bounds Blocks
+      const totalPages = Math.ceil(itemsList.length / itemsPerPage);
+      if (currentPage > totalPages) currentPage = totalPages || 1;
+
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      const paginatedItems = itemsList.slice(startIndex, endIndex);
+
+      // Handle Pagination UI Indicators
+      if (totalPages > 1) {
+        paginationControls.style.display = 'flex';
+        pageProgressIndicator.innerText = `Page ${currentPage} of ${totalPages}`;
+        prevPageBtn.disabled = currentPage === 1;
+        nextPageBtn.disabled = currentPage === totalPages;
+      } else {
+        paginationControls.style.display = 'none';
+      }
+
+      if(currentActiveTab === 'technical') {
+        targetContainer.innerHTML = paginatedItems.map(item => `
+          <div class="data-list-item">
+            <img src="${item.image}" onerror="this.src='images/web design.png'">
+            <div class="item-details">
+              <strong>${item.title}</strong>
+              <div style="font-size:0.85rem; color:#94a3b8;">Competency filled at: ${item.metric}</div>
+            </div>
+            <div class="item-actions">
+              <button class="btn-edit" onclick="initiateEditWorkflow('technical', '${item.id}')">Edit</button>
+              <button class="btn-delete" onclick="executeDeletionItem('technical', '${item.id}')">Remove</button>
+            </div>
+          </div>
+        `).join('');
+      } else {
+        targetContainer.innerHTML = paginatedItems.map(item => `
+          <div class="data-list-item">
+            <div class="item-details">
+              <strong>📌 ${item.statement}</strong>
+              <div style="font-size:0.85rem; color:#94a3b8;">Execution value: ${item.metric}</div>
+            </div>
+            <div class="item-actions">
+              <button class="btn-edit" onclick="initiateEditWorkflow('personal', '${item.id}')">Edit</button>
+              <button class="btn-delete" onclick="executeDeletionItem('personal', '${item.id}')">Remove</button>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    function changePage(direction) {
+      currentPage += direction;
+      renderDataExplorerList();
+    }
+
+    function saveFormEntry(e) {
+      e.preventDefault();
+      const catSelection = document.getElementById('field-category').value;
+      const metricVal = document.getElementById('field-metric').value;
+      const dataKey = catSelection === 'technical' ? 'dataset_technical_skills' : 'dataset_personal_skills';
+      let databaseArray = JSON.parse(localStorage.getItem(dataKey)) || [];
+
+      if (currentEditingId) {
+        databaseArray = databaseArray.map(item => {
+          if(item.id === currentEditingId) {
+            if(catSelection === 'technical') {
+              item.title = document.getElementById('field-title').value.trim();
+              if (base64ImageString !== "") {
+                item.image = base64ImageString;
+              }
+            } else {
+              item.statement = document.getElementById('field-statement').value.trim();
+            }
+            item.metric = metricVal;
+          }
+          return item;
+        });
+        alert("Skill configuration modified successfully!");
+      } else {
+        const newRecord = {
+          id: (catSelection === 'technical' ? 'tech_' : 'pers_') + Date.now(),
+          metric: metricVal
+        };
+
+        if(catSelection === 'technical') {
+          newRecord.title = document.getElementById('field-title').value.trim();
+          newRecord.image = base64ImageString !== "" ? base64ImageString : "images/web design.png";
+        } else {
+          newRecord.statement = document.getElementById('field-statement').value.trim();
+        }
+
+        databaseArray.push(newRecord);
+        currentPage = 1; // Direct users to page 1 to confirm new entry visible context 
+        alert("New skill node registered into localStorage cache!");
+      }
+
+      localStorage.setItem(dataKey, JSON.stringify(databaseArray));
+      clearEditSessionState();
+      switchDataTab(catSelection);
+    }
+
+    function initiateEditWorkflow(category, id) {
+      currentEditingId = id;
+      const dataKey = category === 'technical' ? 'dataset_technical_skills' : 'dataset_personal_skills';
+      const databaseArray = JSON.parse(localStorage.getItem(dataKey)) || [];
+      const itemToEdit = databaseArray.find(i => i.id === id);
+
+      if(!itemToEdit) return;
+
+      document.getElementById('field-category').value = category;
+      document.getElementById('field-category').disabled = true; 
+      adjustFormFieldsByCategory(category);
+
+      if(category === 'technical') {
+        document.getElementById('field-title').value = itemToEdit.title;
+        document.getElementById('img-preview').src = itemToEdit.image;
+        document.getElementById('img-preview-status').textContent = "Leave blank to keep current image asset";
+        base64ImageString = itemToEdit.image;
+      } else {
+        document.getElementById('field-statement').value = itemToEdit.statement;
+      }
+
+      document.getElementById('field-metric').value = itemToEdit.metric;
+      document.getElementById('form-panel-title').textContent = "Edit Selected Skill";
+      document.getElementById('submit-action-btn').textContent = "Save Changes";
+      document.getElementById('cancel-edit-btn').style.display = 'block';
+    }
+
+    function clearEditSessionState() {
+      currentEditingId = null;
+      base64ImageString = "";
+      document.getElementById('registryForm').reset();
+      document.getElementById('field-category').disabled = false;
+      adjustFormFieldsByCategory(document.getElementById('field-category').value);
+      document.getElementById('form-panel-title').textContent = "Add Skill Record";
+      document.getElementById('submit-action-btn').textContent = "Save";
+      document.getElementById('cancel-edit-btn').style.display = 'none';
+    }
+
+    function executeDeletionItem(category, id) {
+      if(confirm("Permanently wipe this specific metric configuration? This operation cannot be undone.")) {
+        const dataKey = category === 'technical' ? 'dataset_technical_skills' : 'dataset_personal_skills';
+        let databaseArray = JSON.parse(localStorage.getItem(dataKey)) || [];
+        databaseArray = databaseArray.filter(item => item.id !== id);
+        localStorage.setItem(dataKey, JSON.stringify(databaseArray));
+        
+        if (currentEditingId === id) clearEditSessionState();
+        renderDataExplorerList();
+      }
+    }
+
+    function revertToDefaults() {
+      if(confirm("Are you sure you want to restore the default fallback baseline parameters? All structural manual updates will clear.")) {
+        localStorage.removeItem('dataset_technical_skills');
+        localStorage.removeItem('dataset_personal_skills');
+        location.reload();
+      }
+    }
+
+    // Initial load configurations
+    adjustFormFieldsByCategory('technical');
+    if(!localStorage.getItem('dataset_technical_skills') || !localStorage.getItem('dataset_personal_skills')) {
+      const initialTechnicalData = [
+        { id: "tech_1", title: "Graphic Design", image: "images/graphic design.png", metric: "90%" },
+        { id: "tech_2", title: "Web Design", image: "images/web design.png", metric: "85%" },
+        { id: "tech_3", title: "Microsoft Word", image: "images/word.png", metric: "95%" },
+        { id: "tech_4", title: "Microsoft Excel", image: "images/excel.png", metric: "90%" }
+      ];
+      const initialPersonalData = [
+        { id: "pers_1", statement: "Motivated and always willing to learn new things", metric: "100%" },
+        { id: "pers_2", statement: "Independent and self-sufficient in handling task", metric: "100%" },
+        { id: "pers_3", statement: "Collaborative and able to work in teams or group", metric: "100%" }
+      ];
+      localStorage.setItem('dataset_technical_skills', JSON.stringify(initialTechnicalData));
+      localStorage.setItem('dataset_personal_skills', JSON.stringify(initialPersonalData));
+    }
+    renderDataExplorerList();
+  </script>
+</body>
+</html>

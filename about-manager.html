@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Content Manager | rj_v.lcs</title>
+   <link rel="icon" href="images/logo.png" type="image/x-icon">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    main {
+      padding: 100px 10% 40px 10%;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+ 
+    
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2.5rem;
+      border-bottom: 2px solid rgba(100, 116, 139, 0.2);
+      padding-bottom: 1rem;
+      gap: 1rem;
+    }
+
+    .panel-title h1 {
+      font-size: 2rem;
+      color: var(--accent, #ffa500);
+      margin: 0;
+    }
+
+    .panel-title p {
+      margin: 0.3rem 0 0 0;
+    }
+
+    .back-btn {
+      padding: 0.6rem 1.5rem;
+      background: #64748b;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .manager-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 3rem;
+    }
+
+    .form-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 2rem;
+      border-radius: 12px;
+      height: fit-content;
+      margin-bottom: 2rem;
+    }
+
+    .form-card h2 {
+      margin-bottom: 1.5rem;
+      font-size: 1.35rem;
+      color: var(--accent, #ffa500);
+      border-left: 3px solid var(--accent, #ffa500);
+      padding-left: 0.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: #ffffff;
+    }
+
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 0.7rem;
+      border-radius: 6px;
+      border: 1px solid rgba(100, 116, 139, 0.4);
+      background: rgba(0,0,0,0.2);
+      color: #ffffff;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .submit-btn {
+      flex: 1;
+      padding: 0.8rem;
+      background: var(--accent, #ffa500);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .cancel-btn {
+      padding: 0.8rem 1.2rem;
+     background: transparent;
+      border: 1px solid #ef4444;
+      color: #ef4444;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .experience-list-box h2 {
+      margin-bottom: 1.5rem;
+      color: #ffa500;
+    }
+
+    .table-responsive-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 8px;
+    }
+
+    .items-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 550px;
+    }
+
+    .items-table th, .items-table td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid rgba(100, 116, 139, 0.2);
+      vertical-align: top;
+      color: #ffffff;
+    }
+
+    .items-table th {
+      background: rgba(255,255,255,0.02);
+      font-weight: 600;
+    }
+
+    .actions-cell {
+      white-space: nowrap;
+    }
+
+    .actions-cell button {
+      padding: 0.4rem 0.8rem;
+      margin-right: 0.3rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .edit-btn { background: #3b82f6; color: white; }
+    .delete-btn { background: #ef4444; color: white; }
+    
+    /* Dedicated Pagination Component Button UI Blocks */
+    .pagination-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.25rem;
+      margin-top: 1.75rem;
+      font-size: 0.95rem;
+      user-select: none;
+      color: #ffffff;
+    }
+
+    .pagination-nav-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(100, 116, 139, 0.4);
+      color: #ffffff;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    [data-theme="light"] .pagination-nav-btn {
+      background: #f8fafc;
+      border: 1px solid rgba(100, 116, 139, 0.2);
+      color: #0f172a;
+    }
+
+    .pagination-nav-btn:hover:not(:disabled) {
+      border-color: var(--accent, #ffa500);
+      background: var(--accent, #ffa500);
+      color: #ffffff;
+    }
+
+    .pagination-nav-btn:disabled {
+      background: rgba(0, 0, 0, 0.1);
+      border-color: rgba(100, 116, 139, 0.2);
+      color: #64748b;
+      cursor: not-allowed;
+      opacity: 0.4;
+    }
+
+    .reset-container {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px dashed rgba(100,116,139,0.3);
+    }
+    .reset-btn {
+      background: none;
+      border: 1px solid #ef4444;
+      color: #ef4444;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    .reset-btn:hover { background: rgba(239, 68, 68, 0.1); }
+
+    /* ==========================================
+       RESPONSIVE MEDIA QUERIES
+       ========================================== */
+    @media (max-width: 950px) {
+      main {
+        padding: 90px 5% 40px 5%;
+      }
+
+      .manager-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .panel-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.2rem;
+      }
+
+      .back-btn {
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+      }
+
+      .panel-title h1 {
+        font-size: 1.6rem;
+      }
+
+      .form-card {
+        padding: 1.25rem;
+      }
+
+      .btn-row {
+        flex-direction: column-reverse;
+        gap: 0.8rem;
+      }
+
+      .cancel-btn, .submit-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <div class="panel-header">
+      <!-- <div class="panel-title">
+        <h1>Journey Objective Editor</h1>
+        <p>Manage the statement text block displayed in your Home Screen's Learn More popup.</p>
+      </div> -->
+        <a href="index-manager.html" class="admin-edit-link">⚙️ Edit Objective</a>
+        <a href="about-manager.html" class="admin-edit-link">⚙️ Edit About</a>
+        <a href="skills-manager.html">⚙️ Edit Skills</a>
+        <a href="admin.html" class="admin-entry-btn">⚙️ Edit Projects</a>
+        <a href="apps-manager.html" class="admin-entry-btn">⚙️ Edit Applications</a>
+        <a href="contact-manager.html" class="admin-entry-btn">⚙️ Edit Contacts</a>
+          <a href="upload.html" class="admin-entry-btn">⚙️ Upload Image</a>
+        <a href="index.html" class="back-btn">Logout</a>
+    </div>
+
+    <div class="manager-grid">
+      
+      <div>
+        <div class="form-card">
+          <h2>Edit Biography</h2>
+          <form id="bioForm">
+            <div class="form-group">
+              <label for="bioSubtitleInput">Professional Headline Subtitle</label>
+              <input type="text" id="bioSubtitleInput" required>
+            </div>
+            <div class="form-group">
+              <label for="bioParagraphsInput">Biography Paragraphs (Separate each paragraph with an empty blank line break)</label>
+              <textarea id="bioParagraphsInput" rows="10" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Save</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="experience-list-box">
+        
+        <div class="form-card" id="experienceFormAnchor">
+          <h2 id="expFormHeader">Add Experience</h2>
+          <form id="experienceForm">
+            <input type="hidden" id="expEditingId" value="">
+            
+            <div class="form-group">
+              <label for="expRole">Role Title Position</label>
+              <input type="text" id="expRole" placeholder="e.g. Web Developer & Graphic Designer" required>
+            </div>
+            <div class="form-group">
+              <label for="expCompany">Company / Agency Name</label>
+              <input type="text" id="expCompany" placeholder="e.g. Licos Tech & Design" required>
+            </div>
+            <div class="form-group">
+              <label for="expLocation">Place of Work</label>
+              <input type="text" id="expLocation" placeholder="e.g. Vigan City, Ilocos Sur" required>
+            </div>
+            <div class="form-group">
+              <label for="expDuration">Employment Timeline Duration</label>
+              <input type="text" id="expDuration" placeholder="e.g. January 15, 2026 - Present" required>
+            </div>
+            <div class="form-group">
+              <label for="expDesc">Summary Descriptions & Responsibilities</label>
+              <textarea id="expDesc" rows="4" placeholder="Briefly capture core deliverables..." required></textarea>
+            </div>
+
+            <div class="btn-row">
+              <button type="button" class="cancel-btn" onclick="clearExpForm()">Cancel</button>
+              <button type="submit" class="submit-btn" id="expSubmitBtn">Save</button>
+            </div>
+          </form>
+        </div>
+
+        <h2>Experience Table</h2>
+        <div class="table-responsive-wrapper">
+          <table class="items-table">
+            <thead>
+              <tr>
+                <th>Position Details</th>
+                <th>Responsibilities</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="experienceTableBody"></tbody>
+          </table>
+        </div>
+
+        <div class="pagination-container" id="paginationControls" style="display: none;">
+          <button type="button" class="pagination-nav-btn" id="prevPageBtn" onclick="changePage(-1)">&lt; Previous</button>
+          <span id="pageProgressIndicator">Page 1 of 1</span>
+          <button type="button" class="pagination-nav-btn" id="nextPageBtn" onclick="changePage(1)">Next &gt;</button>
+        </div>
+
+        <div class="reset-container">
+          <button class="reset-btn" onclick="wipeAndRestoreDefaults()">Restore Original Profile Setup</button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    // document.body.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');
+
+    const defaultBio = {
+      subtitle: "Creative Content Specialist",
+      paragraphs: [
+        "Hello! I am a passionate creator focused on crafting high-converting promotional designs, visual branding layouts, and tailored advertisements that connect deeply with target audiences.",
+        "With a sharp eye for layout composition, color balance, and typography architectures, I transform standard brand briefs into exceptional marketing collateral. My mission is to merge structural clarity with engaging visuals to elevate digital interfaces.",
+        "When I'm not designing, I dedicate time to coding dynamic application scripts, refining front-end frameworks, and analyzing conversion metrics to optimize end-user experiences."
+      ]
+    };
+
+    const defaultExperience = [
+      {
+        id: "exp1",
+        role: "Lead UI & Brand Designer",
+        company: "Vivid Media Dynamics",
+        location: "Remote / New York",
+        duration: "2024 - Present",
+        desc: "Spearheaded visual design strategies for digital ad campaigns. Coordinated with front-end development branches to design beautiful interfaces, interactive web apps, and high-converting commercial banners."
+      },
+      {
+        id: "exp2",
+        role: "Graphic Design Specialist",
+        company: "Pixel Perfect Agency",
+        location: "San Francisco, CA (Hybrid)",
+        duration: "2022 - 2024",
+        desc: "Designed bespoke vector typography assets, social media branding kits, food and product advertisement prints, and high-impact presentation slides tailored to tech industry clients."
+      }
+    ];
+
+    let localBio = JSON.parse(localStorage.getItem('about_bio')) || defaultBio;
+    let localExperience = JSON.parse(localStorage.getItem('about_experience')) || defaultExperience;
+
+    // Pagination Configuration Global Trackers
+    let currentPage = 1;
+    const itemsPerPage = 5; 
+
+    const bioForm = document.getElementById('bioForm');
+    const bioSubtitleInput = document.getElementById('bioSubtitleInput');
+    const bioParagraphsInput = document.getElementById('bioParagraphsInput');
+
+    const experienceForm = document.getElementById('experienceForm');
+    const expEditingId = document.getElementById('expEditingId');
+    const expRole = document.getElementById('expRole');
+    const expCompany = document.getElementById('expCompany');
+    const expLocation = document.getElementById('expLocation');
+    const expDuration = document.getElementById('expDuration');
+    const expDesc = document.getElementById('expDesc');
+    const expFormHeader = document.getElementById('expFormHeader');
+    const expSubmitBtn = document.getElementById('expSubmitBtn');
+    const experienceTableBody = document.getElementById('experienceTableBody');
+    
+    const paginationControls = document.getElementById('paginationControls');
+    const prevPageBtn = document.getElementById('prevPageBtn');
+    const nextPageBtn = document.getElementById('nextPageBtn');
+    const pageProgressIndicator = document.getElementById('pageProgressIndicator');
+
+    bioSubtitleInput.value = localBio.subtitle;
+    bioParagraphsInput.value = localBio.paragraphs.join('\n\n');
+
+    syncExperienceTable();
+
+    /* Helper Engine to handle chronological sorting checks */
+    function getLatestYear(durationStr) {
+      if (!durationStr) return 0;
+      if (/present|current/i.test(durationStr)) return 9999;
+      const years = durationStr.match(/\b\d{4}\b/g);
+      if (years && years.length > 0) {
+        return Math.max(...years.map(Number));
+      }
+      return 0;
+    }
+
+    /* ==========================================
+       BIOGRAPHY FORM HANDLERS INTERCEPTS
+       ========================================== */
+    bioForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const processedParagraphs = bioParagraphsInput.value
+        .split(/\n\s*\n/)
+        .map(p => p.trim())
+        .filter(p => p.length > 0);
+
+      localBio = {
+        subtitle: bioSubtitleInput.value.trim(),
+        paragraphs: processedParagraphs
+      };
+
+      localStorage.setItem('about_bio', JSON.stringify(localBio));
+      alert("Biography modifications applied successfully!");
+    });
+
+    /* ==========================================
+       EXPERIENCE TIMELINE MANAGEMENTS OPERATIONS
+       ========================================== */
+    function syncExperienceTable() {
+      experienceTableBody.innerHTML = '';
+      if(localExperience.length === 0) {
+        experienceTableBody.innerHTML = `<tr><td colspan="3" style="text-align:center;color:#64748b;">No active records found. Create one above!</td></tr>`;
+        paginationControls.style.display = 'none';
+        return;
+      }
+
+      const sortedExperience = [...localExperience].sort((a, b) => {
+        return getLatestYear(b.duration) - getLatestYear(a.duration);
+      });
+
+      // Pagination Segment Logic Bounds Parsing
+      const totalPages = Math.ceil(sortedExperience.length / itemsPerPage);
+      if (currentPage > totalPages) currentPage = totalPages || 1;
+
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      const paginatedItems = sortedExperience.slice(startIndex, endIndex);
+
+      // Render Pagination Navigation Metadata Node Layouts
+      if (totalPages > 1) {
+        paginationControls.style.display = 'flex';
+        pageProgressIndicator.innerText = `Page ${currentPage} of ${totalPages}`;
+        prevPageBtn.disabled = currentPage === 1;
+        nextPageBtn.disabled = currentPage === totalPages;
+      } else {
+        paginationControls.style.display = 'none';
+      }
+
+      paginatedItems.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>
+            <strong>${item.role}</strong><br>
+            <span style="font-size:0.85rem; color:var(--accent,#ffa500);">${item.duration}</span><br>
+            <span style="font-size:0.9rem; opacity:0.8;">${item.company}</span><br>
+            <span style="font-size:0.8rem; color:#64748b;">📍 ${item.location || 'Not Specified'}</span>
+          </td>
+          <td style="font-size:0.9rem; max-width:280px;">${item.desc}</td>
+          <td class="actions-cell">
+            <button class="edit-btn" onclick="beginExpEdit('${item.id}')">Edit</button>
+            <button class="delete-btn" onclick="removeExpNode('${item.id}')">Delete</button>
+          </td>
+        `;
+        experienceTableBody.appendChild(tr);
+      });
+    }
+
+    function changePage(direction) {
+      currentPage += direction;
+      syncExperienceTable();
+    }
+
+    experienceForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const activeId = expEditingId.value;
+      const targetPayload = {
+        id: activeId || 'exp_' + Date.now(),
+        role: expRole.value.trim(),
+        company: expCompany.value.trim(),
+        location: expLocation.value.trim(),
+        duration: expDuration.value.trim(),
+        desc: expDesc.value.trim()
+      };
+
+      if(activeId) {
+        localExperience = localExperience.map(item => item.id === activeId ? targetPayload : item);
+      } else {
+        localExperience.push(targetPayload);
+        currentPage = 1;
+      }
+
+      localStorage.setItem('about_experience', JSON.stringify(localExperience));
+      clearExpForm();
+      syncExperienceTable();
+    });
+
+    function beginExpEdit(id) {
+      const match = localExperience.find(item => item.id === id);
+      if(!match) return;
+
+      expEditingId.value = match.id;
+      expRole.value = match.role;
+      expCompany.value = match.company;
+      expLocation.value = match.location || "";
+      expDuration.value = match.duration;
+      expDesc.value = match.desc;
+
+      expFormHeader.innerText = "Edit Selected Experience";
+      expSubmitBtn.innerText = "Save Changes";
+      document.getElementById('experienceFormAnchor').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function removeExpNode(id) {
+      if(confirm("Are you sure you want to delete this Eperience from your public history timeline?")) {
+        localExperience = localExperience.filter(item => item.id !== id);
+        localStorage.setItem('about_experience', JSON.stringify(localExperience));
+        syncExperienceTable();
+        if(expEditingId.value === id) clearExpForm();
+      }
+    }
+
+    function clearExpForm() {
+      expEditingId.value = "";
+      experienceForm.reset();
+      expFormHeader.innerText = "Add Experience";
+      expSubmitBtn.innerText = "Save";
+    }
+
+    function wipeAndRestoreDefaults() {
+      if(confirm("This action will completely overwrite customized text blocks and revert pages back to your default configuration. Continue?")) {
+        localBio = defaultBio;
+        localExperience = defaultExperience;
+        currentPage = 1;
+        
+        localStorage.setItem('about_bio', JSON.stringify(defaultBio));
+        localStorage.setItem('about_experience', JSON.stringify(defaultExperience));
+
+        bioSubtitleInput.value = defaultBio.subtitle;
+        bioParagraphsInput.value = defaultBio.paragraphs.join('\n\n');
+
+        clearExpForm();
+        syncExperienceTable();
+      }
+    }
+  </script>
+</body>
+</html>
