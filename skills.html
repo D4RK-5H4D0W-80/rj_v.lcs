@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Skills | rj_v.lcs</title>
-   <link rel="icon" href="images/logo.png" type="image/x-icon">
+  <link rel="icon" href="images/logo.png" type="image/x-icon">
   <link rel="stylesheet" href="style.css">
   <style>
     /* Content grouping states controls */
@@ -25,7 +25,6 @@
 
     /* Set main layout to precisely fill remaining screen height without scrolling */
     main {
-      /* padding: 90px 10% 0 10%; 90px top padding ensures space below the fixed navbar */
       height: 100vh;
       display: flex;
       flex-direction: column;
@@ -96,7 +95,7 @@
 
     /* Left Side: Container pulling graphic straight down to baseline window edge */
     .skills-image-container {
-      flex: 1; /* Scaled down slightly from 1.3 to balance with medium image sizing */
+      flex: 1; 
       display: flex;
       justify-content: flex-start;
       align-items: flex-end;
@@ -129,7 +128,6 @@
 
     @media (max-width: 768px) {
       main {
-        /* height: auto; */
         padding: 120px 6% 40px 6%;
         overflow: visible;
       }
@@ -240,17 +238,6 @@
       margin-top: -0.5rem;
       margin-bottom: 1rem;
     }
-
-    .admin-edit-badge-box a {
-      color: #ffa500;
-      font-size: 0.85rem;
-      text-decoration: underline;
-      opacity: 0.8;
-    }
-
-    .admin-edit-badge-box a:hover {
-      opacity: 1;
-    }
   </style>
 </head>
 <body>
@@ -259,9 +246,9 @@
     <div class="brand-container">
       <h3>rj_v.lcs</h3>
       <a href="login.html" class="brand-user-icon" title="Admin Access Panel">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           <path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-        </svg>
+        </svg> -->
       </a>
     </div>
 
@@ -292,17 +279,50 @@
       </select>
     </div>
 
-    <div class="admin-edit-badge-box">
-      <!-- <a href="skills-manager.html">⚙️ Open Skills Modification Panel</a> -->
-    </div>
+    <div class="admin-edit-badge-box"></div>
 
+    <!-- ==========================================
+       TECHNICAL SKILLS SECTION
+       ========================================== */ -->
     <div id="technical-skills" class="skills-category-content active">
       <div class="technical-scroll-container">
         <div class="technical-grid" id="technical-grid-target">
+          
+          <!-- Skill Item 1 -->
+          <div class="card" id="node-tech_1">
+            <img src="images/graphic design.png" alt="Graphic Design" class="card-tech-icon" onerror="this.src='images/web design.png'">
+            <p>Graphic Design</p>
+            <div class="skill-bar"><div class="skill-fill" data-width="90%"></div></div>
           </div>
+
+          <!-- Skill Item 2 -->
+          <div class="card" id="node-tech_2">
+            <img src="images/web design.png" alt="Web Design" class="card-tech-icon" onerror="this.src='images/web design.png'">
+            <p>Web Design</p>
+            <div class="skill-bar"><div class="skill-fill" data-width="85%"></div></div>
+          </div>
+
+          <!-- Skill Item 3 -->
+          <div class="card" id="node-tech_3">
+            <img src="images/word.png" alt="Microsoft Word" class="card-tech-icon" onerror="this.src='images/web design.png'">
+            <p>Microsoft Word</p>
+            <div class="skill-bar"><div class="skill-fill" data-width="95%"></div></div>
+          </div>
+
+          <!-- Skill Item 4 -->
+          <div class="card" id="node-tech_4">
+            <img src="images/excel.png" alt="Microsoft Excel" class="card-tech-icon" onerror="this.src='images/web design.png'">
+            <p>Microsoft Excel</p>
+            <div class="skill-bar"><div class="skill-fill" data-width="90%"></div></div>
+          </div>
+
+        </div>
       </div>
     </div>
 
+    <!-- ==========================================
+       PERSONAL SKILLS SECTION
+       ========================================== */ -->
     <div id="personal-skills" class="skills-category-content">
       <div class="personal-skills-layout">
         <div class="skills-image-container">
@@ -311,7 +331,26 @@
         <div class="skills-text-container">
           <div class="card">
             <div style="margin-top: 1.5rem;" id="personal-list-target">
+              
+              <!-- Personal Statement 1 -->
+              <div style="margin-bottom: 1.25rem;">
+                <p>📌 Motivated and always willing to learn new things</p>
+                <div class="skill-bar"><div class="skill-fill" data-width="100%"></div></div>
               </div>
+
+              <!-- Personal Statement 2 -->
+              <div style="margin-bottom: 1.25rem;">
+                <p>📌 Independent and self-sufficient in handling tasks</p>
+                <div class="skill-bar"><div class="skill-fill" data-width="100%"></div></div>
+              </div>
+
+              <!-- Personal Statement 3 -->
+              <div style="margin-bottom: 1.25rem;">
+                <p>📌 Collaborative and able to work in teams or groups</p>
+                <div class="skill-bar"><div class="skill-fill" data-width="100%"></div></div>
+              </div>
+
+            </div>
           </div>
         </div>
       </div>
@@ -334,61 +373,6 @@
         this.classList.add('active');
       });
     });
-
-    /* =============================================================
-       DATA SEEDING ENGINE (DEFAULT VALUES USED ON FIRST RUN)
-       ============================================================= */
-    const initialTechnicalData = [
-      { id: "tech_1", title: "Graphic Design", image: "images/graphic design.png", metric: "90%" },
-      { id: "tech_2", title: "Web Design", image: "images/web design.png", metric: "85%" },
-      { id: "tech_3", title: "Microsoft Word", image: "images/word.png", metric: "95%" },
-      { id: "tech_4", title: "Microsoft Excel", image: "images/excel.png", metric: "90%" }
-    ];
-
-    const initialPersonalData = [
-      { id: "pers_1", statement: "Motivated and always willing to learn new things", metric: "100%" },
-      { id: "pers_2", statement: "Independent and self-sufficient in handling task", metric: "100%" },
-      { id: "pers_3", statement: "Collaborative and able to work in teams or group", metric: "100%" }
-    ];
-
-    function fetchStoredSkillsData() {
-      if (!localStorage.getItem('dataset_technical_skills')) {
-        localStorage.setItem('dataset_technical_skills', JSON.stringify(initialTechnicalData));
-      }
-      if (!localStorage.getItem('dataset_personal_skills')) {
-        localStorage.setItem('dataset_personal_skills', JSON.stringify(initialPersonalData));
-      }
-
-      renderSkillsDOM();
-    }
-
-    function renderSkillsDOM() {
-      const techList = JSON.parse(localStorage.getItem('dataset_technical_skills'));
-      const persList = JSON.parse(localStorage.getItem('dataset_personal_skills'));
-
-      // Render Technical Section
-      const techContainer = document.getElementById('technical-grid-target');
-      techContainer.innerHTML = techList.map(item => `
-        <div class="card" id="node-${item.id}">
-          <img src="${item.image}" alt="${item.title}" class="card-tech-icon" onerror="this.src='images/web design.png'">
-          <p>${item.title}</p>
-          <div class="skill-bar"><div class="skill-fill" data-width="${item.metric}"></div></div>
-        </div>
-      `).join('');
-
-      // Render Personal Section
-      const persContainer = document.getElementById('personal-list-target');
-      persContainer.innerHTML = persList.map(item => `
-        <div style="margin-bottom: 1.25rem;">
-          <p>📌 ${item.statement}</p>
-          <div class="skill-bar"><div class="skill-fill" data-width="${item.metric}"></div></div>
-        </div>
-      `).join('');
-
-      // Re-trigger bar filling animation workflow
-      const activeContentBlock = document.querySelector('.skills-category-content.active');
-      animateCategoryBars(activeContentBlock);
-    }
 
     function handleDropdownChange(category) {
       document.querySelectorAll('.skills-category-content').forEach(c => c.classList.remove('active'));
@@ -420,7 +404,6 @@
 
     // Lifecycle Boots
     window.addEventListener('DOMContentLoaded', () => {
-      fetchStoredSkillsData();
       checkHashRoute();
     });
     window.addEventListener('hashchange', checkHashRoute);
