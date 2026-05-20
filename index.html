@@ -58,8 +58,8 @@
     }
 
     /* ==========================================
-       MODAL COMPONENT ENGINE UI RULES
-       ========================================== */
+        MODAL COMPONENT ENGINE UI RULES
+        ========================================== */
     .hero-buttons {
       display: flex;
       gap: 1rem;
@@ -219,9 +219,9 @@
     <div class="brand-container">
       <h3>rj_v.lcs</h3>
       <a href="login.html" class="brand-user-icon" title="Admin Access Panel">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           <path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-        </svg>
+        </svg> -->
       </a>
     </div>
     
@@ -264,8 +264,8 @@
       <h2>CAREER OBJECTIVE</h2>
       
       <div id="objectiveDisplayView">
-       
-        <p>Seeking a challenging role in an IT organization where I can leverage my technical skills and contribute to company growth. wennnn</p>
+        <!-- 📝 EDIT YOUR TEXT DIRECTLY HERE -->
+        <p>Seeking a challenging role in an IT organization where I can leverage my technical skills and contribute to company growth.</p>
       </div>
 
       <div class="admin-link-box">
@@ -303,7 +303,12 @@
 
     /* Modal Engine Event Dispatches */
     function openModal() {
-      loadObjectiveContent(); 
+      /* 
+        ⚠️ INTERNET CHROME CACHE OVERRIDE SAFETY SWITCH:
+        I have added '//' below to stop JavaScript from overwriting your HTML edits.
+        Uncomment it when you want your admin dashboard updates to work again.
+      */
+      // loadObjectiveContent(); 
       infoModal.classList.add('active');
       document.body.style.overflow = 'hidden'; 
     }
@@ -329,7 +334,12 @@
     document.body.setAttribute('data-theme', savedTheme);
     updateBackground(savedTheme);
     
-    loadObjectiveContent();
+    /* 
+      ⚠️ INTERNET CHROME CACHE OVERRIDE SAFETY SWITCH:
+      I have added '//' below to stop JavaScript from overwriting your HTML edits.
+      Uncomment it when you want your admin dashboard updates to work again.
+    */
+    // loadObjectiveContent();
   </script>
 </body>
 </html>
