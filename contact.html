@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact Me | Portfolio</title>
+  <title>Contact Me | rj_v.lcs</title>
   <link rel="icon" href="images/logo.png" type="image/x-icon">
   <link rel="stylesheet" href="style.css">
 
@@ -224,9 +224,9 @@
     <div class="brand-container">
       <h3>rj_v.lcs</h3>
       <a href="login.html" class="brand-user-icon" title="Admin Access Panel">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           <path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-        </svg>
+        </svg> -->
       </a>
     </div>
 
@@ -272,7 +272,7 @@
         <h2 class="right-panel-title">Get in touch</h2>
         <p class="contact-subtitle" style="margin-bottom: 0.5rem;">Let's build something incredible together.</p>
         
-        <a href="#" id="link-email" target="_blank" class="contact-method">
+        <a href="https://mail.google.com/mail/u/0/#inbox" id="link-email" target="_blank" class="contact-method">
           <div class="contact-icon">
             <svg viewBox="0 0 24 24"><path d="M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6A2,2 0 0,0 20,4M20,8L12,13L4,8V6L12,11L20,6V8Z"/></svg>
           </div>
@@ -292,7 +292,7 @@
           </div>
         </a>
 
-        <a href="#" id="link-facebook" target="_blank" class="contact-method">
+        <a href="https://facebook.com/rjay.lcs" id="link-facebook" target="_blank" class="contact-method">
           <div class="contact-icon">
             <svg viewBox="0 0 24 24"><path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0,0 22 12.06C22 6.53 17.5 2.04 12 2.04Z"/></svg>
           </div>
@@ -302,7 +302,7 @@
           </div>
         </a>
 
-        <a href="#" id="link-instagram" target="_blank" class="contact-method">
+        <a href="https://instagram.com/rj_v.lcs" id="link-instagram" target="_blank" class="contact-method">
           <div class="contact-icon">
             <svg viewBox="0 0 24 24"><path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M12,7A5,5 0 0,0 7,12A5,5 0 0,0 12,17A5,5 0 0,0 17,12A5,5 0 0,0 12,7M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9M18.4,4.8A1.2,1.2 0 1,0 19.6,6A1.2,1.2 0 0,0 18.4,4.8Z"/></svg>
           </div>
@@ -325,39 +325,27 @@
     }
     document.body.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');
 
-    // Default configuration dataset state
-    const defaultContactData = {
-      mapText: "Manangat, Caoayan, Ilocos Sur, Philippines",
-      mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3805.3503527267154!2d120.37561917600862!3d17.56233969779373!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x338e645167099719%3A0xcda19098fb5f0962!2sManangat%2C%20Caoayan%2C%20Ilocos%20Sur!5e0!3m2!1sen!2sph!4v1716223500000!5m2!1sen!2sph",
-      emailText: "rickyjaylicos051601@gmail.com",
-      emailLink: "https://mail.google.com/mail/u/0/#inbox",
-      phoneText: "0927-229-6487",
-      phoneLink: "tel:09272296487",
-      facebookText: "Ricky Jay Licos",
-      facebookLink: "https://facebook.com/rjay.lcs",
-      instagramText: "@rj_v.lcs",
-      instagramLink: "https://instagram.com/rj_v.lcs"
-    };
-
     function loadContactProfile() {
       const stored = localStorage.getItem('portfolio_contact_data');
-      const data = stored ? JSON.parse(stored) : defaultContactData;
+      if (stored) {
+        const data = JSON.parse(stored);
 
-      // Populate interface values
-      document.getElementById('display-map-text').textContent = data.mapText;
-      document.getElementById('display-map-iframe').src = data.mapEmbedUrl;
-      
-      document.getElementById('text-email').textContent = data.emailText;
-      document.getElementById('link-email').href = data.emailLink;
+        // Update values only if dynamic updates from local storage exist
+        if (data.mapText) document.getElementById('display-map-text').textContent = data.mapText;
+        if (data.mapEmbedUrl) document.getElementById('display-map-iframe').src = data.mapEmbedUrl;
+        
+        if (data.emailText) document.getElementById('text-email').textContent = data.emailText;
+        if (data.emailLink) document.getElementById('link-email').href = data.emailLink;
 
-      document.getElementById('text-phone').textContent = data.phoneText;
-      document.getElementById('link-phone').href = data.phoneLink;
+        if (data.phoneText) document.getElementById('text-phone').textContent = data.phoneText;
+        if (data.phoneLink) document.getElementById('link-phone').href = data.phoneLink;
 
-      document.getElementById('text-facebook').textContent = data.facebookText;
-      document.getElementById('link-facebook').href = data.facebookLink;
+        if (data.facebookText) document.getElementById('text-facebook').textContent = data.facebookText;
+        if (data.facebookLink) document.getElementById('link-facebook').href = data.facebookLink;
 
-      document.getElementById('text-instagram').textContent = data.instagramText;
-      document.getElementById('link-instagram').href = data.instagramLink;
+        if (data.instagramText) document.getElementById('text-instagram').textContent = data.instagramText;
+        if (data.instagramLink) document.getElementById('link-instagram').href = data.instagramLink;
+      }
     }
 
     window.addEventListener('DOMContentLoaded', loadContactProfile);
