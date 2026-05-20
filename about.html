@@ -11,7 +11,7 @@
        MAIN APP FRAMEWORK & PERSISTENT LAYOUTS
        ========================================== */
     main {
-      padding: 120px 10% 60px 10%;
+      padding: 100px 10% 60px 10%;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -44,7 +44,7 @@
        ========================================== */
     .profile-container {
       display: flex;
-      gap: 4rem;
+      gap: 2rem;
       align-items: center;
       justify-content: space-between;
     }
@@ -56,7 +56,7 @@
     }
 
     .profile-image-frame img {
-      width: 100%;
+      /* width: 100%; */
       height: auto;
       border-radius: 16px;
       /* box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
@@ -275,9 +275,9 @@
      <div class="brand-container">
       <h3>rj_v.lcs</h3>
       <a href="login.html" class="brand-user-icon" title="Admin Access Panel">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           <path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-        </svg>
+        </svg> -->
       </a>
     </div>
 
@@ -292,13 +292,6 @@
         <li><a href="index.html" class="active">Home</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="skills.html">Skills</a></li>
-        <!-- <li class="dropdown">
-          <a href="skills.html">Skills ▾</a>
-          <ul class="dropdown-menu">
-            <li><a href="skills.html#technical">Technical Skills</a></li>
-            <li><a href="skills.html#personal">Personal Skills</a></li>
-          </ul>
-        </li> -->
         <li><a href="projects.html">Projects</a></li>
         <li><a href="apps.html">Applications</a></li>
         <li><a href="contact.html">Contact</a></li>
@@ -315,11 +308,12 @@
           <img src="images/rjvlcs_about_img.svg" alt="rj_v.lcs Professional Portrait Visual representation">
         </div>
         <div class="profile-text-content">
-          <h2 id="bioSubtitle">Creative Content Specialist</h2>
+          <h2 id="bioSubtitle">Who I Am ?</h2>
           <div id="bioBodyParagraphs">
-            </div>
+            <p>My name is Ricky Jay V. Licos, a cum laude graduate with a Bachelor’s degree in Information Technology from the University of Northern Philippines (Class of 2024). During my studies, I gained proficiency in front-end technologies such as HTML, CSS, and JavaScript, while also developing back-end skills in PHP and database management using MySQL. My capstone project involved developing the "Library Management System for Ilocos Sur National High School." Additionally, I completed an internship at CSA: Business Consultancy, where I demonstrated my web development skills by creating static websites for three different companies: "Gio’s Ilocano Blend," "Sanvaste Hydroponics Farm," and "D’Outbase Lodging House & Resort." After graduating, I discovered a passion for graphic design, specifically focusing on creating posters for food, cosmetics, shoes, and other products. I continue to practice daily to further refine my design skills.</p>
+            
+          </div>
           <div class="admin-link-row">
-            <!-- <a href="about-manager.html" class="admin-edit-link">⚙️ Manage About & Experience Text</a> -->
           </div>
         </div>
       </div>
@@ -328,7 +322,34 @@
     <section>
       <h1 class="section-title">Work Experience</h1>
       <div class="timeline-container" id="timelineHook">
+        <div class="timeline-node">
+          <div class="timeline-header">
+            <div class="timeline-role">Back Office Staff</div>
+            <div class="timeline-duration">January 15, 2026 - March 31, 2026</div>
+          </div>
+          <div class="timeline-company">S Grande Corporation (PCSO - Small Town Lottery)</div>
+          <div class="timeline-location">📍 Bayubay Norte, San Vicente, Ilocos Sur</div>
+          <div class="timeline-description">As a Back Office Staff member at S Grande Corporation, I was responsible for the manual financial tracking and auditing of gross income from designated Small Town Lottery (STL) stations. My primary focus was the precise weekly and monthly computation of incoming revenue streams, ensuring absolute accuracy, reconciling data variances, and generating reliable financial summaries to support organizational transparency and PCSO compliance.</div>
         </div>
+        <div class="timeline-node">
+          <div class="timeline-header">
+            <div class="timeline-role">Project Development Officer I</div>
+            <div class="timeline-duration">February 10, 2025 - November 10, 2025</div>
+          </div>
+          <div class="timeline-company">National Mapping and Resource Information Authority</div>
+          <div class="timeline-location">📍 Lawton Ave., Fort Bonifacio, Taguig City</div>
+          <div class="timeline-description">I previously served as a Project Development Officer I in the Land Resource Data Analysis Division of NAMRIA, where I contributed to data-driven initiatives on land cover mapping. My responsibilities included supporting the preparation of maps from preliminary drafts to final outputs, conducting field surveys, and ensuring data accuracy through thorough validation and assessment. Additionally, I assisted in data analysis and editing, while providing technical support to senior staff to ensure the completion of assigned tasks.</div>
+        </div>
+         <div class="timeline-node">
+          <div class="timeline-header">
+            <div class="timeline-role">On The Job Training</div>
+            <div class="timeline-duration">April 01, 2024 – June 17, 2024</div>
+          </div>
+          <div class="timeline-company">CSA: Business Consultancy</div>
+          <div class="timeline-location">📍 Santa Catalina, Ilocos Sur</div>
+          <div class="timeline-description">Performed other duties assigned by the immediate supervisor. I completed internship at CSA: Business Consultancy that Showcased my ability to develop a Static Website. Icreated3StaticWebsites indifferent organizations which are the “Gio’s Ilocano Blend”, “Sanvaste Hydroponics Farm”, and “D’outbase Lodging House & Resort.</div>
+        </div>
+      </div>
     </section>
   </main>
 
@@ -343,100 +364,56 @@
     document.body.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');
 
     /* ==========================================
-       DATA ARCHITECTURE INITIAL SEEDING ENGINE
+       DATA ARCHITECTURE REFRESH ENGINE
        ========================================== */
-    const defaultBio = {
-      subtitle: "Creative Content Specialist",
-      paragraphs: [
-        "Hello! I am a passionate creator focused on crafting high-converting promotional designs, visual branding layouts, and tailored advertisements that connect deeply with target audiences.",
-        "With a sharp eye for layout composition, color balance, and typography architectures, I transform standard brand briefs into exceptional marketing collateral. My mission is to merge structural clarity with engaging visuals to elevate digital interfaces.",
-        "When I'm not designing, I dedicate time to coding dynamic application scripts, refining front-end frameworks, and analyzing conversion metrics to optimize end-user experiences."
-      ]
-    };
+    function loadObjectiveContent() {
+      const storedBio = JSON.parse(localStorage.getItem('about_bio'));
+      const storedExperience = JSON.parse(localStorage.getItem('about_experience'));
 
-    const defaultExperience = [
-      {
-        id: "exp1",
-        role: "Lead UI & Brand Designer",
-        company: "Vivid Media Dynamics",
-        location: "Remote / New York",
-        duration: "2024 - Present",
-        desc: "Spearheaded visual design strategies for digital ad campaigns. Coordinated with front-end development branches to design beautiful interfaces, interactive web apps, and high-converting commercial banners."
-      },
-      {
-        id: "exp2",
-        role: "Graphic Design Specialist",
-        company: "Pixel Perfect Agency",
-        location: "San Francisco, CA (Hybrid)",
-        duration: "2022 - 2024",
-        desc: "Designed bespoke vector typography assets, social media branding kits, food and product advertisement prints, and high-impact presentation slides tailored to tech industry clients."
+      // If manager updates exist in localStorage, allow them to overwrite the HTML layout dynamically
+      if (storedBio) {
+        document.getElementById('bioSubtitle').innerText = storedBio.subtitle;
+        const bioParagraphsContainer = document.getElementById('bioBodyParagraphs');
+        bioParagraphsContainer.innerHTML = '';
+        storedBio.paragraphs.forEach(pText => {
+          const pNode = document.createElement('p');
+          pNode.innerText = pText;
+          bioParagraphsContainer.appendChild(pNode);
+        });
       }
-    ];
 
-    // Read stored profile states or apply defaults
-    let activeBio = JSON.parse(localStorage.getItem('about_bio')) || defaultBio;
-    let activeExperience = JSON.parse(localStorage.getItem('about_experience')) || defaultExperience;
+      if (storedExperience && storedExperience.length > 0) {
+        function getLatestYear(durationStr) {
+          if (!durationStr) return 0;
+          if (/present|current/i.test(durationStr)) return 9999;
+          const years = durationStr.match(/\b\d{4}\b/g);
+          return years && years.length > 0 ? Math.max(...years.map(Number)) : 0;
+        }
 
-    if(!localStorage.getItem('about_bio')) localStorage.setItem('about_bio', JSON.stringify(defaultBio));
-    if(!localStorage.getItem('about_experience')) localStorage.setItem('about_experience', JSON.stringify(defaultExperience));
+        const timelineTrack = document.getElementById('timelineHook');
+        timelineTrack.innerHTML = '';
 
-    /* Helper Engine to sort Experience entries dynamically by Year descending */
-    function getLatestYear(durationStr) {
-      if (!durationStr) return 0;
-      if (/present|current/i.test(durationStr)) return 9999;
-      const years = durationStr.match(/\b\d{4}\b/g);
-      if (years && years.length > 0) {
-        return Math.max(...years.map(Number));
+        const sortedExperience = [...storedExperience].sort((a, b) => getLatestYear(b.duration) - getLatestYear(a.duration));
+
+        sortedExperience.forEach(node => {
+          const itemBlock = document.createElement('div');
+          itemBlock.className = 'timeline-node';
+          itemBlock.innerHTML = `
+            <div class="timeline-header">
+              <div class="timeline-role">${node.role}</div>
+              <div class="timeline-duration">${node.duration}</div>
+            </div>
+            <div class="timeline-company">${node.company}</div>
+            <div class="timeline-location">📍 ${node.location || 'Not Specified'}</div>
+            <div class="timeline-description">${node.desc}</div>
+          `;
+          timelineTrack.appendChild(itemBlock);
+        });
       }
-      return 0;
     }
 
-    /* ==========================================
-       DOM INJECTION AND MOUNT OPERATIONS
-       ========================================== */
-    function renderAboutPageContent() {
-      // 1. Render Biography Nodes
-      document.getElementById('bioSubtitle').innerText = activeBio.subtitle;
-      const bioParagraphsContainer = document.getElementById('bioBodyParagraphs');
-      bioParagraphsContainer.innerHTML = '';
-      
-      activeBio.paragraphs.forEach(pText => {
-        const pNode = document.createElement('p');
-        pNode.innerText = pText;
-        bioParagraphsContainer.appendChild(pNode);
-      });
-
-      // 2. Render Chronological Experience Nodes (Sorted: Newest at top)
-      const timelineTrack = document.getElementById('timelineHook');
-      timelineTrack.innerHTML = '';
-
-      if(activeExperience.length === 0) {
-        timelineTrack.innerHTML = `<p style="color:var(--text-muted); font-style:italic;">No milestones listed. Open the Manager Panel to add them!</p>`;
-        return;
-      }
-
-      const sortedExperience = [...activeExperience].sort((a, b) => {
-        return getLatestYear(b.duration) - getLatestYear(a.duration);
-      });
-
-      sortedExperience.forEach(node => {
-        const itemBlock = document.createElement('div');
-        itemBlock.className = 'timeline-node';
-        itemBlock.innerHTML = `
-          <div class="timeline-header">
-            <div class="timeline-role">${node.role}</div>
-            <div class="timeline-duration">${node.duration}</div>
-          </div>
-          <div class="timeline-company">${node.company}</div>
-          <div class="timeline-location">📍 ${node.location || 'Not Specified'}</div>
-          <div class="timeline-description">${node.desc}</div>
-        `;
-        timelineTrack.appendChild(itemBlock);
-      });
-    }
-
-    // Execute Layout Build Loop
-    renderAboutPageContent();
+    // Check for panel overrides on run
+    loadObjectiveContent();
   </script>
 </body>
 </html>
