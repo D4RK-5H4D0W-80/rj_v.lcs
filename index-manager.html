@@ -237,6 +237,13 @@
       }
     }
 
+    // Listens for localStorage modifications happening in other windows/tabs
+    window.addEventListener('storage', (event) => {
+      if (event.key === 'profile_objective') {
+        initEditorFields();
+      }
+    });
+
     // Launch Lifecycle Execution
     initEditorFields();
   </script>
